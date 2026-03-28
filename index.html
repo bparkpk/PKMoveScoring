@@ -877,7 +877,7 @@
 						expertMoveInfoBody.remove()
 					}
 					else {
-						let resultsMoveInfoFormatted = prepareChecks(resultsMoveInfo, strongMoveInfoCheckText,rawHtmlFlag);
+						let resultsMoveInfoFormatted = prepareChecks(resultsMoveInfo, expertMoveInfoCheckText,rawHtmlFlag);
 						expertMoveInfoBody.replaceChildren(...resultsMoveInfoFormatted);
 						expertBody.prepend(expertMoveInfoBody)
 					}
@@ -897,7 +897,7 @@
 						expertMoveInfoBody.remove()
 					}
 					else {
-						let resultsMoveInfoFormatted = prepareChecks(resultsMoveInfo, strongMoveInfoCheckText,rawHtmlFlag);
+						let resultsMoveInfoFormatted = prepareChecks(resultsMoveInfo, riskyMoveInfoCheckText,rawHtmlFlag);
 						riskyMoveInfoBody.replaceChildren(...resultsMoveInfoFormatted);
 						riskyBody.prepend(riskyMoveInfoBody)
 				}
