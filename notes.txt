@@ -1,0 +1,25 @@
+Notes
+
+Edited the Background Information to better fit EK
+
+To add Expert texts for EK specific instances
+
+Add a new set in ExpertCheckText
+Make sure basic/strong/doubles CheckText is also accounting the new set
+Add to MoveUtil and Moves .js files
+
+Completed
+Setup First Turn (was only Wendy and Confuse Ray)
+
+
+To Do
+Adjust for move changes from Vanilla (high crit, etc)
+
+Sky Attack/Superpower/Overheat (change to recoil)
+
+Morning Sun, Moonlight, Synthesis, Swallow always heal 50% (check to see AI)
+Stockpile +1Def/SpDef
+Spit Up (no effect)
+
+
+Add Risky AI to expert AI entries
