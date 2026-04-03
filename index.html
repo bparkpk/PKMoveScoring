@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<title>Platinum Kaizo AI Move Scoring</title>
+<meta name="viewport" content="width=600">
+<style>
+body {background-color: #5E5E5E; color: white;}
+h1 {text-align:center; color: white;}
+h2 {text-align:center; color: white;}
+h3 {text-align:center; color: white;}
+p {text-align:center; color: white;}
+
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  height: 480px;
+  overflow: scroll;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style></head>
+
+<body>
+<table>
+<tr>
+<th>
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Select Move</button>
+
+  <div id="myDropdown" class="dropdown-content">
+<a href="moveAbsorb.html">Absorb</a>
+<a href="moveAcid.html">Acid</a>
+<a href="moveAcidArmor.html">Acid Armor</a>
+<a href="moveAcupressure.html">Acupressure</a>
+<a href="moveAerialAce.html">Aerial Ace</a>
+<a href="moveAeroblast.html">Aeroblast</a>
+<a href="moveAgility.html">Agility</a>
+<a href="moveAirCutter.html">Air Cutter</a>
+<a href="moveAirSlash.html">Air Slash</a>
+<a href="moveAmnesia.html">Amnesia</a>
+<a href="moveAncientPower.html">AncientPower</a>
+<a href="moveAquaCutter.html">Aqua Cutter</a>
+<a href="moveAquaJet.html">Aqua Jet</a>
+<a href="moveAquaRing.html">Aqua Ring</a>
+<a href="moveAquaTail.html">Aqua Tail</a>
+<a href="moveAromatherapy.html">Aromatherapy</a>
+<a href="moveAssist.html">Assist</a>
+<a href="moveAssurance.html">Assurance</a>
+<a href="moveAstonish.html">Astonish</a>
+<a href="moveAttackOrder.html">Attack Order</a>
+<a href="moveAttract.html">Attract</a>
+<a href="moveAuraSphere.html">Aura Sphere</a>
+<a href="moveAurora Beam.html">Aurora Beam</a>
+<a href="moveAvalanche.html">Avalanche</a>
+<a href="moveBarrier.html">Barrier</a>
+<a href="moveBatonPass.html">Baton Pass</a>
+<a href="moveBeatUp.html">Beat Up</a>
+<a href="moveBellyDrum.html">Belly Drum</a>
+<a href="moveBide.html">Bide</a>
+<a href="moveBite.html">Bite</a>
+<a href="moveBlastBurn.html">Blast Burn</a>
+<a href="moveBlazeKick.html">Blaze Kick</a>
+<a href="moveBlizzard.html">Blizzard</a>
+<a href="moveBlock.html">Block</a>
+<a href="moveBodySlam.html">Body Slam</a>
+<a href="moveBoneClub.html">Bone Club</a>
+<a href="moveBoneRush.html">Bone Rush</a>
+<a href="moveBonemerang.html">Bonemerang</a>
+<a href="moveBounce.html">Bounce</a>
+<a href="moveBraveBird.html">Brave Bird</a>
+<a href="moveBrickBreak.html">Brick Break</a>
+<a href="moveBrine.html">Brine</a>
+<a href="moveBubble.html">Bubble</a>
+<a href="moveBubbleBeam.html">BubbleBeam</a>
+<a href="moveBugBite.html">Bug Bite</a>
+<a href="moveBugBuzz.html">Bug Buzz</a>
+<a href="moveBulkUp.html">Bulk Up</a>
+<a href="moveBulldoze.html">Bulldoze</a>
+<a href="moveBulletPunch.html">Bullet Punch</a>
+<a href="moveBulletSeed.html">Bullet Seed</a>
+<a href="moveCalmMind.html">Calm Mind</a>
+<a href="moveCamouflage.html">Camouflage</a>
+<a href="moveCaptivate.html">Captivate</a>
+<a href="moveCharge.html">Charge</a>
+<a href="moveChargeBeam.html">Charge Beam</a>
+<a href="moveCharm.html">Charm</a>
+<a href="moveChatter.html">Chatter</a>
+<a href="moveClamp.html">Clamp</a>
+<a href="moveCloseCombat.html">Close Combat</a>
+<a href="moveConfuseRay.html">Confuse Ray</a>
+<a href="moveConfusion.html">Confusion</a>
+<a href="moveConstrict.html">Constrict</a>
+<a href="moveConversion2.html">Conversion 2</a>
+<a href="moveCopycat.html">Copycat</a>
+<a href="moveCosmicPower.html">Cosmic Power</a>
+<a href="moveCottonSpore.html">Cotton Spore</a>
+<a href="moveCounter.html">Counter</a>
+<a href="moveCrabhammer.html">Crabhammer</a>
+<a href="moveCrossChop.html">Cross Chop</a>
+<a href="moveCrossPoison.html">Cross Poison</a>
+<a href="moveCrunch.html">Crunch</a>
+<a href="moveCrushClaw.html">Crush Claw</a>
+<a href="moveCrushGrip.html">Crush Grip</a>
+<a href="moveCurse.html">Curse</a>
+<a href="moveCut.html">Cut</a>
+<a href="moveDarkPulse.html">Dark Pulse</a>
+<a href="moveDarkVoid.html">Dark Void</a>
+<a href="moveDefend Order.html">Defend Order</a>
+<a href="moveDefog.html">Defog</a>
+<a href="moveDestinyBond.html">Destiny Bond</a>
+<a href="moveDetect.html">Detect</a>
+<a href="moveDig.html">Dig</a>
+<a href="moveDisable.html">Disable</a>
+<a href="moveDischarge.html">Discharge</a>
+<a href="moveDive.html">Dive</a>
+<a href="moveDizzyPunch.html">Dizzy Punch</a>
+<a href="moveDoom Desire.html">Doom Desire</a>
+<a href="moveDoubleHit.html">Double Hit</a>
+<a href="moveDoubleKick.html">Double Kick</a>
+<a href="moveDoubleTeam.html">Double Team</a>
+<a href="moveDoubleEdge.html">Double-Edge</a>
+<a href="moveDoubleSlap.html">DoubleSlap</a>
+<a href="moveDracoMeteor.html">Draco Meteor</a>
+<a href="moveDragonClaw.html">Dragon Claw</a>
+<a href="moveDragonDance.html">Dragon Dance</a>
+<a href="moveDragonPulse.html">Dragon Pulse</a>
+<a href="moveDragonRage.html">Dragon Rage</a>
+<a href="moveDragonRush.html">Dragon Rush</a>
+<a href="moveDragonBreath.html">DragonBreath</a>
+<a href="moveDrainPunch.html">Drain Punch</a>
+<a href="moveDreamEater.html">Dream Eater</a>
+<a href="moveDrillPeck.html">Drill Peck</a>
+<a href="moveDrillRun.html">Drill Run</a>
+<a href="moveDynamicPunch.html">DynamicPunch</a>
+<a href="moveEarthPower.html">Earth Power</a>
+<a href="moveEarthquake.html">Earthquake</a>
+<a href="moveEggBomb.html">Egg Bomb</a>
+<a href="moveEmbargo.html">Embargo</a>
+<a href="moveEmber.html">Ember</a>
+<a href="moveEncore.html">Encore</a>
+<a href="moveEndeavor.html">Endeavor</a>
+<a href="moveEndure.html">Endure</a>
+<a href="moveEnergyBall.html">Energy Ball</a>
+<a href="moveEruption.html">Eruption</a>
+<a href="moveExplosion.html">Explosion</a>
+<a href="moveExtrasensory.html">Extrasensory</a>
+<a href="moveExtremeSpeed.html">ExtremeSpeed</a>
+<a href="moveFacade.html">Facade</a>
+<a href="moveFaintAttack.html">Faint Attack</a>
+<a href="moveFakeOut.html">Fake Out</a>
+<a href="moveFakeTears.html">Fake Tears</a>
+<a href="moveFalseSwipe.html">False Swipe</a>
+<a href="moveFeatherDance.html">FeatherDance</a>
+<a href="moveFeint.html">Feint</a>
+<a href="moveFireBall.html">Fire Ball</a>
+<a href="moveFireBlast.html">Fire Blast</a>
+<a href="moveFireFang.html">Fire Fang</a>
+<a href="moveFirePunch.html">Fire Punch</a>
+<a href="moveFireSpin.html">Fire Spin</a>
+<a href="moveFissure.html">Fissure</a>
+<a href="moveFlail.html">Flail</a>
+<a href="moveFlameWheel.html">Flame Wheel</a>
+<a href="moveFlamethrower.html">Flamethrower</a>
+<a href="moveFlareBlitz.html">Flare Blitz</a>
+<a href="moveFlash.html">Flash</a>
+<a href="moveFlashCannon.html">Flash Cannon</a>
+<a href="moveFlatter.html">Flatter</a>
+<a href="moveFling.html">Fling</a>
+<a href="moveFly.html">Fly</a>
+<a href="moveFocusBlast.html">Focus Blast</a>
+<a href="moveFocusEnergy.html">Focus Energy</a>
+<a href="moveFocusPunch.html">Focus Punch</a>
+<a href="moveFollowMe.html">Follow Me</a>
+<a href="moveForcePalm.html">Force Palm</a>
+<a href="moveForesight.html">Foresight</a>
+<a href="moveFrenzyPlant.html">Frenzy Plant</a>
+<a href="moveFrustration.html">Frustration</a>
+<a href="moveFuryAttack.html">Fury Attack</a>
+<a href="moveFuryCutter.html">Fury Cutter</a>
+<a href="moveFurySwipes.html">Fury Swipes</a>
+<a href="moveFutureSight.html">Future Sight</a>
+<a href="moveGastroAcid.html">Gastro Acid</a>
+<a href="moveGigaDrain.html">Giga Drain</a>
+<a href="moveGigaImpact.html">Giga Impact</a>
+<a href="moveGlare.html">Glare</a>
+<a href="moveGrassKnot.html">Grass Knot</a>
+<a href="moveGrassWhistle.html">GrassWhistle</a>
+<a href="moveGravity.html">Gravity</a>
+<a href="moveGrowl.html">Growl</a>
+<a href="moveGrowth.html">Growth</a>
+<a href="moveGrudge.html">Grudge</a>
+<a href="moveGuardSwap.html">Guard Swap</a>
+<a href="moveGuillotine.html">Guillotine</a>
+<a href="moveGunkShot.html">Gunk Shot</a>
+<a href="moveGust.html">Gust</a>
+<a href="moveGyroBall.html">Gyro Ball</a>
+<a href="moveHail.html">Hail</a>
+<a href="moveHailBall.html">Hail Ball</a>
+<a href="moveHammerArm.html">Hammer Arm</a>
+<a href="moveHarden.html">Harden</a>
+<a href="moveHaze.html">Haze</a>
+<a href="moveHeadSmash.html">Head Smash</a>
+<a href="moveHeadbutt.html">Headbutt</a>
+<a href="moveHealBell.html">Heal Bell</a>
+<a href="moveHealOrder.html">Heal Order</a>
+<a href="moveHeartSwap.html">Heart Swap</a>
+<a href="moveHeatWave.html">Heat Wave</a>
+<a href="moveHelpingHand.html">Helping Hand</a>
+<a href="moveHiJumpKick.html">Hi Jump Kick</a>
+<a href="moveHiddenPower.html">Hidden Power</a>
+<a href="moveHornDrill.html">Horn Drill</a>
+<a href="moveHowl.html">Howl</a>
+<a href="moveHPDark.html">HP Dark</a>
+<a href="moveHPElectric.html">HP Electric</a>
+<a href="moveHPFighting.html">HP Fighting</a>
+<a href="moveHPFire.html">HP Fire</a>
+<a href="moveHPFlying.html">HP Flying</a>
+<a href="moveHPGhost.html">HP Ghost</a>
+<a href="moveHPGrass.html">HP Grass</a>
+<a href="moveHPGround.html">HP Ground</a>
+<a href="moveHPIce.html">HP Ice</a>
+<a href="moveHPPsychic.html">HP Psychic</a>
+<a href="moveHPRock.html">HP Rock</a>
+<a href="moveHPWater.html">HP Water</a>
+<a href="moveHurricane.html">Hurricane</a>
+<a href="moveHydr Cannon.html">Hydro Cannon</a>
+<a href="moveHydroPump.html">Hydro Pump</a>
+<a href="moveHyperBeam.html">Hyper Beam</a>
+<a href="moveHyperFang.html">Hyper Fang</a>
+<a href="moveHyperVoice.html">Hyper Voice</a>
+<a href="moveHypnosis.html">Hypnosis</a>
+<a href="moveIceBall.html">Ice Ball</a>
+<a href="moveIceBeam.html">Ice Beam</a>
+<a href="moveIceFang.html">Ice Fang</a>
+<a href="moveIcePunch.html">Ice Punch</a>
+<a href="moveIceShard.html">Ice Shard</a>
+<a href="moveIcicleSpear.html">Icicle Spear</a>
+<a href="moveIcyWind.html">Icy Wind</a>
+<a href="moveImprison.html">Imprison</a>
+<a href="moveIngrain.html">Ingrain</a>
+<a href="moveIronDefense.html">Iron Defense</a>
+<a href="moveIronHead.html">Iron Head</a>
+<a href="moveIronTail.html">Iron Tail</a>
+<a href="moveJudgment.html">Judgment</a>
+<a href="moveJumpKick.html">Jump Kick</a>
+<a href="moveKarateChop.html">Karate Chop</a>
+<a href="moveKinesis.html">Kinesis</a>
+<a href="moveKnockOff.html">Knock Off</a>
+<a href="moveLastResort.html">Last Resort</a>
+<a href="moveLavaPlume.html">Lava Plume</a>
+<a href="moveLeafBlade.html">Leaf Blade</a>
+<a href="moveLeafStorm.html">Leaf Storm</a>
+<a href="moveLeechLife.html">Leech Life</a>
+<a href="moveLeechSeed.html">Leech Seed</a>
+<a href="moveLeer.html">Leer</a>
+<a href="moveLick.html">Lick</a>
+<a href="moveLightScreen.html">Light Screen</a>
+<a href="moveLockOn.html">Lock-On</a>
+<a href="moveLovelyKiss.html">Lovely Kiss</a>
+<a href="moveLowKick.html">Low Kick</a>
+<a href="moveLuckyChant.html">Lucky Chant</a>
+<a href="moveLunarDance.html">Lunar Dance</a>
+<a href="moveLusterPurge.html">Luster Purge</a>
+<a href="moveMachPunch.html">Mach Punch</a>
+<a href="moveMagicCoat.html">Magic Coat</a>
+<a href="moveMagicalLeaf.html">Magical Leaf</a>
+<a href="moveMagmaStorm.html">Magma Storm</a>
+<a href="moveMagnetBomb.html">Magnet Bomb</a>
+<a href="moveMagnetRise.html">Magnet Rise</a>
+<a href="moveMeFirst.html">Me First</a>
+<a href="moveMeanLook.html">Mean Look</a>
+<a href="moveMeditate.html">Meditate</a>
+<a href="moveMegaDrain.html">Mega Drain</a>
+<a href="moveMegaKick.html">Mega Kick</a>
+<a href="moveMegaPunch.html">Mega Punch</a>
+<a href="moveMegahorn.html">Megahorn</a>
+<a href="moveMemento.html">Memento</a>
+<a href="moveMetalBurst.html">Metal Burst</a>
+<a href="moveMetalClaw.html">Metal Claw</a>
+<a href="moveMetalSound.html">Metal Sound</a>
+<a href="moveMeteorMash.html">Meteor Mash</a>
+<a href="moveMetronome.html">Metronome</a>
+<a href="moveMilkDrink.html">Milk Drink</a>
+<a href="moveMimic.html">Mimic</a>
+<a href="moveMindReader.html">Mind Reader</a>
+<a href="moveMinimize.html">Minimize</a>
+<a href="moveMiracleEye.html">Miracle Eye</a>
+<a href="moveMirrorCoat.html">Mirror Coat</a>
+<a href="moveMirrorMove.html">Mirror Move</a>
+<a href="moveMirrorShot.html">Mirror Shot</a>
+<a href="moveMist.html">Mist</a>
+<a href="moveMistBall.html">Mist Ball</a>
+<a href="moveMoonlight.html">Moonlight</a>
+<a href="moveMorningSun.html">Morning Sun</a>
+<a href="moveMudBomb.html">Mud Bomb</a>
+<a href="moveMudShot.html">Mud Shot</a>
+<a href="moveMudSlap.html">Mud-Slap</a>
+<a href="moveMuddyWater.html">Muddy Water</a>
+<a href="moveMysticalFire.html">Mystical Fire</a>
+<a href="moveNastyPlot.html">Nasty Plot</a>
+<a href="moveNaturalGift.html">Natural Gift</a>
+<a href="moveNaturePower.html">Nature Power</a>
+<a href="moveNeedleArm.html">Needle Arm</a>
+<a href="moveNightShade.html">Night Shade</a>
+<a href="moveNightSlash.html">Night Slash</a>
+<a href="moveOctazooka.html">Octazooka</a>
+<a href="moveOdorSleuth.html">Odor Sleuth</a>
+<a href="moveOminousWind.html">Ominous Wind</a>
+<a href="moveOutrage.html">Outrage</a>
+<a href="moveOverheat.html">Overheat</a>
+<a href="movePainSplit.html">Pain Split</a>
+<a href="movePayDay.html">Pay Day</a>
+<a href="movePayback.html">Payback</a>
+<a href="movePeck.html">Peck</a>
+<a href="movePerishSong.html">Perish Song</a>
+<a href="movePetalDance.html">Petal Dance</a>
+<a href="movePinMissile.html">Pin Missile</a>
+<a href="movePluck.html">Pluck</a>
+<a href="movePoisonFang.html">Poison Fang</a>
+<a href="movePoisonGas.html">Poison Gas</a>
+<a href="movePoisonJab.html">Poison Jab</a>
+<a href="movePoisonSting.html">Poison Sting</a>
+<a href="movePoisonTail.html">Poison Tail</a>
+<a href="movePoisonPowder.html">PoisonPowder</a>
+<a href="movePound.html">Pound</a>
+<a href="movePowderSnow.html">Powder Snow</a>
+<a href="movePowerGem.html">Power Gem</a>
+<a href="movePowerSwap.html">Power Swap</a>
+<a href="movePowerTrick.html">Power Trick</a>
+<a href="movePowerWhip.html">Power Whip</a>
+<a href="movePresent.html">Present</a>
+<a href="moveProtect.html">Protect</a>
+<a href="movePsybeam.html">Psybeam</a>
+<a href="movePsychUp.html">Psych Up</a>
+<a href="movePsychic.html">Psychic</a>
+<a href="movePsychoBoost.html">Psycho Boost</a>
+<a href="movePsychoCut.html">Psycho Cut</a>
+<a href="movePsychoShift.html">Psycho Shift</a>
+<a href="movePunishment.html">Punishment</a>
+<a href="movePursuit.html">Pursuit</a>
+<a href="moveQuickAttack.html">Quick Attack</a>
+<a href="moveRage.html">Rage</a>
+<a href="moveRainDance.html">Rain Dance</a>
+<a href="moveRazorLeaf.html">Razor Leaf</a>
+<a href="moveRazorWind.html">Razor Wind</a>
+<a href="moveRecover.html">Recover</a>
+<a href="moveRecycle.html">Recycle</a>
+<a href="moveReflect.html">Reflect</a>
+<a href="moveRefresh.html">Refresh</a>
+<a href="moveRest.html">Rest</a>
+<a href="moveReturn.html">Return</a>
+<a href="moveRevenge.html">Revenge</a>
+<a href="moveReversal.html">Reversal</a>
+<a href="moveRoar.html">Roar</a>
+<a href="moveRoarofTime.html">Roar of Time</a>
+<a href="moveRockBall.html">Rock Ball</a>
+<a href="moveRockBlast.html">Rock Blast</a>
+<a href="moveRockClimb.html">Rock Climb</a>
+<a href="moveRockPolish.html">Rock Polish</a>
+<a href="moveRockSlide.html">Rock Slide</a>
+<a href="moveRockSmash.html">Rock Smash</a>
+<a href="moveRockThrow.html">Rock Throw</a>
+<a href="moveRockTomb.html">Rock Tomb</a>
+<a href="moveRockWrecker.html">Rock Wrecker</a>
+<a href="moveRolePlay.html">Role Play</a>
+<a href="moveRollingKick.html">Rolling Kick</a>
+<a href="moveRollout.html">Rollout</a>
+<a href="moveRoost.html">Roost</a>
+<a href="moveSacredFire.html">Sacred Fire</a>
+<a href="moveSafeguard.html">Safeguard</a>
+<a href="moveSandTomb.html">Sand Tomb</a>
+<a href="moveSandAttack.html">Sand-Attack</a>
+<a href="moveSandstorm.html">Sandstorm</a>
+<a href="moveScald.html">Scald</a>
+<a href="moveScaryFace.html">Scary Face</a>
+<a href="moveScratch.html">Scratch</a>
+<a href="moveScreech.html">Screech</a>
+<a href="moveSecretPower.html">Secret Power</a>
+<a href="moveSeedBomb.html">Seed Bomb</a>
+<a href="moveSeedFlare.html">Seed Flare</a>
+<a href="moveSeismicToss.html">Seismic Toss</a>
+<a href="moveSelfdestruct.html">Selfdestruct</a>
+<a href="moveShadowBall.html">Shadow Ball</a>
+<a href="moveShadowClaw.html">Shadow Claw</a>
+<a href="moveShadowForce.html">Shadow Force</a>
+<a href="moveShadowPunch.html">Shadow Punch</a>
+<a href="moveShadowSneak.html">Shadow Sneak</a>
+<a href="moveSharpen.html">Sharpen</a>
+<a href="moveSheerCold.html">Sheer Cold</a>
+<a href="moveShockWave.html">Shock Wave</a>
+<a href="moveSignalBeam.html">Signal Beam</a>
+<a href="moveSilverWind.html">Silver Wind</a>
+<a href="moveSing.html">Sing</a>
+<a href="moveSketch.html">Sketch</a>
+<a href="moveSkill Swap.html">Skill Swap</a>
+<a href="moveSkyAttack.html">Sky Attack</a>
+<a href="moveSkyUppercut.html">Sky Uppercut</a> 
+<a href="moveSlackOff.html">Slack Off</a>
+<a href="moveSlam.html">Slam</a>
+<a href="moveSlash.html">Slash</a>
+<a href="moveSleepPowder.html">Sleep Powder</a>
+<a href="moveSleepTalk.html">Sleep Talk</a>
+<a href="moveSludge.html">Sludge</a>
+<a href="moveSludgeBomb.html">Sludge Bomb</a>
+<a href="moveSmellingSalt.html">SmellingSalt</a>
+<a href="moveSmog.html">Smog</a>
+<a href="moveSmokeScreen.html">SmokeScreen</a>
+<a href="moveSnore.html">Snore</a>
+<a href="moveSoftboiled.html">Softboiled</a>
+<a href="moveSolarBeam.html">Solar-Beam</a>
+<a href="moveSolarBeam2.html">SolarBeam</a>
+<a href="moveSonicBoom.html">SonicBoom</a>
+<a href="moveSpacialRend.html">Spacial Rend</a>
+<a href="moveSpiderWeb.html">Spider Web</a>
+<a href="moveSpikes.html">Spikes</a>
+<a href="moveSpite.html">Spite</a>
+<a href="moveSpore.html">Spore</a>
+<a href="moveStealthRock.html">Stealth Rock</a>
+<a href="moveSteelWing.html">Steel Wing</a>
+<a href="moveStockpile.html">Stockpile</a>
+<a href="moveStomp.html">Stomp</a>
+<a href="moveStoneEdge.html">Stone Edge</a>
+<a href="moveStrength.html">Strength</a>
+<a href="moveStringShot.html">String Shot</a>
+<a href="moveStunSpore.html">Stun Spore</a>
+<a href="moveSubmission.html">Submission</a>
+<a href="moveSubstitute.html">Substitute</a>
+<a href="moveSuckerPunch.html">Sucker Punch</a>
+<a href="moveSunnyDay.html">Sunny Day</a>
+<a href="moveSuperFang.html">Super Fang</a>
+<a href="moveSuperpower.html">Superpower</a>
+<a href="moveSupersonic.html">Supersonic</a>
+<a href="moveSurf.html">Surf</a>
+<a href="moveSwagger.html">Swagger</a>
+<a href="moveSwallow.html">Swallow</a>
+<a href="moveSweetKiss.html">Sweet Kiss</a>
+<a href="moveSweetScent.html">Sweet Scent</a>
+<a href="moveSwift.html">Swift</a>
+<a href="moveSwordsDance.html">Swords Dance</a>
+<a href="moveSynthesis.html">Synthesis</a>
+<a href="moveTackle.html">Tackle</a>
+<a href="moveTailGlow.html">Tail Glow</a>
+<a href="moveTailWhip.html">Tail Whip</a>
+<a href="moveTailwind.html">Tailwind</a>
+<a href="moveTakeDown.html">Take Down</a>
+<a href="moveTeeterDance.html">Teeter Dance</a>
+<a href="moveTeleport.html">Teleport</a>
+<a href="moveThief.html">Thief</a>
+<a href="moveThrash.html">Thrash</a>
+<a href="moveThunder.html">Thunder</a>
+<a href="moveThunderFang.html">Thunder Fang</a>
+<a href="moveThunderWave.html">Thunder Wave</a>
+<a href="moveThunderbolt.html">Thunderbolt</a>
+<a href="moveThunderPunch.html">ThunderPunch</a>
+<a href="moveThunderShock.html">ThunderShock</a>
+<a href="moveTickle.html">Tickle</a>
+<a href="moveTorment.html">Torment</a>
+<a href="moveToxic.html">Toxic</a>
+<a href="moveToxicSpikes.html">Toxic Spikes</a>
+<a href="moveTransform.html">Transform</a>
+<a href="moveTriAttack.html">Tri Attack</a>
+<a href="moveTrickRoom.html">Trick Room</a>
+<a href="moveTripleAxel.html">Triple Axel</a>
+<a href="moveTripleKick.html">Triple Kick</a>
+<a href="moveTrumpCard.html">Trump Card</a>
+<a href="moveTwineedle.html">Twineedle</a>
+<a href="moveTwister.html">Twister</a>
+<a href="moveU-turn.html">U-turn</a>
+<a href="moveUproar.html">Uproar</a>
+<a href="moveVacuumWave.html">Vacuum Wave</a>
+<a href="moveViceGrip.html">ViceGrip</a>
+<a href="moveVineWhip.html">Vine Whip</a>
+<a href="moveVitalThrow.html">Vital Throw</a>
+<a href="moveVoltTackle.html">Volt Tackle</a>
+<a href="moveWakeUpSlap.html">Wake-Up Slap</a>
+<a href="moveWaterBall.html">Water Ball</a>
+<a href="moveWaterGun.html">Water Gun</a>
+<a href="moveWaterPulse.html">Water Pulse</a>
+<a href="moveWaterSpout.html">Water Spout</a>
+<a href="moveWaterfall.html">Waterfall</a>
+<a href="moveWeatherBall.html">Weather Ball</a>
+<a href="moveWhirlpool.html">Whirlpool</a>
+<a href="moveWhirlwind.html">Whirlwind</a>
+<a href="moveWildCharge.html">Wild Charge</a>
+<a href="moveWillOWisp.html">Will-O-Wisp</a>
+<a href="moveWingAttack.html">Wing Attack</a>
+<a href="moveWish.html">Wish</a>
+<a href="moveWithdraw.html">Withdraw</a>
+<a href="moveWoodHammer.html">Wood Hammer</a>
+<a href="moveWorrySeed.html">Worry Seed</a>
+<a href="moveWrap.html">Wrap</a>
+<a href="moveWringOut.html">Wring Out</a>
+<a href="moveXScissor.html">X-Scissor</a>
+<a href="moveYawn.html">Yawn</a>
+<a href="moveZapCannon.html">Zap Cannon</a>
+<a href="moveZenHeadbutt.html">Zen Headbutt</a>
+  </div>
+</div>
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+</th>
+<th>
+<h1>Platinum Kaizo AI Move Scoring</h1>
+	<p><a href="index.html">Home Page</a></p>
+</th>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+<h1>AI Move Scoring Guide</h1>
+<p>This site, and information within is adapted from the <a
+	href="https://pokemow.com/Gen4/TrainerAI/">Generation 4 site</a> and the <a href="https://will-jj.github.io/gen4to3MowAI/">Generation 3 site</a>
+			for Platinum Kaizo play.
+			During the initial deployment some information in this briefing, and the subsequent move choice scoring may
+			reflect that - please report any issues to BPark16 on Discord</p>
+		<h2>Overview</h2>
+		<p>This page will look up trainer battle AI procedures for the
+			Generation IV Pokémon romhack – Pokémon Platinum Kaizo.</p>
+
+		<p>The Battle AI uses a scoring system to determine which move to use
+			(and which target to use it on, if applicable). Each move starts with a
+			score of 100 (but this starting point is arbitrary), which is then
+			added or subtracted to by the different parts of the scoring procedure.</p>
+
+		<p>Every move is scored on every target on the field (even if that
+			doesn't make sense for the move, such as Swords Dance or Earthquake),
+			with scores being independent for each target. After all scoring is
+			completed, the move and target with the highest score is selected. If
+			multiple moves tie for the highest score, one will be selected from them
+			at random. In double battles, a move is selected for each target first,
+			then if the scores between targets are tied, a target is selected at
+			random.</p>
+
+		<p>Scoring is skipped if the target is fainted, or if the move being
+			scored cannot be selected due to being out of PP or locked out by Taunt,
+			Torment, Choice items, Encore, etc. However, procedures that compare
+			one move to another, such as to check which deals more damage, do <b><em>NOT</em></b> consider if other moves are
+			locked out of use.</p>
+
+		<p>The scoring process is nondeterministic: a given move and target
+			may result in a different score each time it is checked due to
+			randomness within the scoring functions.</p>
+
+		<h2>Move Scoring</h2>
+		<p>The scoring procedure is split into eleven main modules: Basic, Eval Att, Expert, Doubles, Setup First Turn, Risky, Prio Damage, Baton Pass, 		Check HP, Weather, and Harassment.</p>
+
+		<p>As a general rule:</p>
+		<ul>
+			<li>
+				<p><strong>Basic AI</strong> discourages using moves without
+					effect: stat-boosting moves when already at +6, healing moves when
+					already at full HP, status moves when the target is already statused, and non effective moves such as Earthquake
+					on a Flying target.</p>
+			</li>
+
+			<li>
+				<p><strong>Eval Att AI</strong> encourages doing the most damage possible and going for a KO if one is
+					available.</p>
+			</li>
+
+			<li>
+				<p><strong>Expert AI</strong> encourages using smarter strategies on a per-move basis.</p>
+			</li>
+			
+			<li>
+				<p><strong>Doubles AI</strong> discourages using attacks on the
+					ally without a good reason, and checks if moves such as weather or Trick
+					Room will help or harm the ally.</p>
+				<p>
+				</p>
+				<p>Doubles AI is split into two parts: a part for checking
+					attacks against enemies, and a part for checking if there is a reason to
+					attack the ally.</p>
+			</li>
+			<li>
+				<p><strong>Setup First Turn AI</strong> encourages status moves on both the user and opponent in <b>ONLY on the first turn of the entire battle.</b></p>
+			</li>
+			
+			<li>
+				<p><strong>Risky AI</strong> adds a chance of a bonus scoring to certain moves.</p>
+			</li>
+
+			<li>
+				<p><strong>Prio Damage AI</strong> adds a chance of a scoring bonus to certain moves.</p>
+			</li>
+
+			<li>
+				<p><strong>Baton Pass AI</strong> encourages setup moves when at higher HP or early on in the battle.</p>
+			</li>
+			<li>
+				<p><strong>Check HP AI</strong> discourages certain moves at particular HP thresholds.</p>
+			</li>
+			<li>
+				<p><strong>Weather AI</strong> encourages weather setup moes <b>ONLY on the first turn of the entire battle.</b>.</p>
+			</li>
+			<li>
+				<p><strong>Harassment AI</strong> encourages moves that harass or disrupt the opponent.</b>.</p>
+			</li>
+		</ul>
+
+		<p>None, one, or several of these modules run their scoring procedure
+			depending upon the context of the battle. Each module runs
+			independently, and their scores stack together. Only Doubles AI will
+			attempt to use moves on the ally.</p>
+		<h2>The "terminate" keyword within a
+			module means that the scoring of the module is complete, but other
+			modules may still continue on top of the work that it did.</h2>
+
+		<h2>AI knowledge</h2>
+		<p>The AI always knows what item you're holding. It cheats to see it.</p>
+
+		<p>The AI always knows your exact current HP and max HP.</p>
+
+		<p>The AI does <b><em>not</em></b> know your moves until it sees you use
+			them. Other methods that expose moves, such as Sleep Talk or the
+			Forewarn ability, do not count.</p>
+
+		<p>The AI does <em>not</em> know your ability until it sees a text
+			box with the ability name, such as: "... makes ground moves miss using
+			LEVITATE", or "... FLASH FIRE made Flamethrower useless". If the AI does
+			not know your ability, then most times it tries to check what your
+			ability is, it will randomly guess one of the possible abilities your
+			Pokémon's species can normally have. This guess will happen <b>EVERY</b> turn until the AI confirms your ability.<br><br>
+			Abilities that modify damage but do
+			not generate text, like Heatproof or Solid Rock, are not known to the
+			AI even after damage is dealt. However, the AI is aware of the reduced
+			damage that will be inflicted (e.g., for a Heatproof Bronzong, it will
+			assume Levitate 50% of the time, but also will know that the Bronzong
+			may survive a high-damage Fire attack that would KO if it had Levitate).</p>
+
+		<p>Rarely, the AI must specifically see your ability, or your species
+			must not have any other possible ability, in order for a check to
+			succeed; these cases are worded as "If the target's ability is
+			certainly...".</p>
+
+		<p>There is one exception to this: the AI knows if your ability is
+			Shadow Tag, Magnet Pull, or Arena Trap preventing it from switching.</p>
+		<p>The AI always knows the attack order of all Pokémon on the field, barring speed ties or Quick Claws. It knows if there will be a speed tie, but does not know who will win it. If the AI is checking if it will attack before or after another target, and there is a speed tie, it will randomly guess the outcome of the tie. For any Pokémon on the field with a Quick Claw, it will randomly guess the Quick Claw will activate 20% of the time, independent of if the Quick Claw will actually activate.</p>
+
+
+		<p>The AI always knows the exact abilities, items, and moves of itself and its ally.</p>
+
+		<p>If you switch out, the AI will forget its knowledge of your moves and abilities.</p>
+
+		<h2>AI calculations</h2>
+		<h3>Effectiveness</h3>
+		<p>When the AI checks for move effectiveness, it does so regardless of if the move in question is actually
+			damaging.</p>
+<p>If the user has the ability Normalize, the move's type is changed to Normal. Otherwise, if the move is Natural Gift, Hidden Power, Judgment, or Weather Ball, the move is adjusted to its correct type.</p>
+			
+			<p><b>The effectiveness multiplier is initialized to 1x, and then first adjusted by:</p></b>
+			<ul>
+				<li><p>STAB</p></li>
+				<li><p>Adaptability</p></li>
+			</ul>
+			
+			<p><b>The move's calculated type is then checked against the target's type(s), applying:</p></b>
+			<ul>
+				<li><p>Scrappy</p></li>
+				<li><p>Mold Breaker</p></li>
+				<li><p>Odor Sleuth / Foresight</p></li>
+				<li><p>Gastro Acid</p></li>
+				<li><p>Miracle Eye</p></li>
+				<li><p>Roost / Ingrain / Iron Ball / Gravity</p></li>
+				<li><p>Magnet Rise / Levitate</p></li>
+				<li><p>Wonder Guard</p></li>
+			</ul>
+			
+			<p><b>Subsequently, if the move deals damage at all (including OHKO moves, countering moves, etc.), the check applies:</p></b>
+			<ul>
+				<li><p>Tinted Lens</p></li>
+				<li><p>Expert Belt</p></li>
+				<li><p>Filter / Solid Rock</p></li>
+			</ul>
+			
+			<p><b>The resulting multiplier is returned as the total effectiveness of the move.</p>
+			
+			<p>All of these other factors are always ignored:</p></b>
+			<ul>
+				<li><p>Water Absorb</p></li>
+				<li><p>Flash Fire</p></li>
+				<li><p>Motor Drive</p></li>
+				<li><p>Volt Absorb</p></li>
+				<li><p>Dry Skin</p></li>
+				<li><p>Soundproof</p></li>
+				<li><p>Damp</p></li>
+				<li><p>If the move deals fixed damage</p></li>
+			</ul>
+			
+			<p>The effectiveness check specifically cheats and checks if your ability is Filter, Solid Rock, Levitate, or Wonder Guard, and returns an appropriate multiplier. This means that, for example, if you have a Levitate Bronzong, the AI will see Earthquake as 0x effective. But, if you have a Heatproof Bronzong, the AI will see that Earthquake is 2x effective, but will still, 50% of the time, guess that it has Levitate and avoid picking it.</p>
+			
+			<p>If the overall effectiveness as a result of this check is exactly 0.375x, 0.75x, 3x, or 6x, it makes the assumption that this must be STAB boosted and adjusts the effectiveness to 0.25x, 0.5x, 2x, and 4x, respectively. This adjustment occurs even if the move is not actually STAB boosted (for instance, 4x supereffective vs Solid Rock results in a 3x multiplier, which is then adjusted to 2x).</p>
+			
+			<p>Therefore, when the AI runs a check on a condition such as "If the move is 4x supereffective...", this works normally for STAB and non-STAB moves, but may fail to trigger properly when Adaptability, Expert Belt, Tinted Lens, or Filter / Solid Rock are in effect.</p>
+			
+			<h3>If a Pokémon has a supereffective move</h3>
+			
+			<p>When checking specifically if a Pokémon has a move to hit a target supereffectively, rather than using the effectiveness multiplier, it will check the flag that would generate the "It's super effective!" text. This means no Expert Belt, Filter / Solid Rock, Adaptability, fixed-damage move, or nondamaging move would interfere.</p>
+			
+			<p>However, this check is subject to a different bug known as the <em>dual non-immunity glitch</em>. Dual-type Pokémon have their two types checked in type-table order, and if the first type is immune to the attacking move, and the second type is weak to the attacking move, then the weakness flag is still set, alongside the existing immunity flag. If the immune type comes second in the type table, these flags would both be cleared.</p>
+			
+			<p>In practice, this glitch has these consequences:</p>
+			
+			<ul>
+				<li><p>Gligar and Gliscor are considered weak to Electric</p></li>
+				<li><p>Aerodactyl is considered weak to Ground</p></li>
+				<li><p>Skarmory is considered weak to Ground</p></li>
+				<li><p>Girafarig is considered weak to Ghost</p></li>
+			</ul>
+			
+			<h3>Damage</h3>
+			
+			<p>When the AI checks how much damage a move will deal, it uses the game's normal and correct procedure for calculating damage for that move, but without any of the multipliers used on the <em>output</em> of damage calculation:</p>
+			<ul>
+				<li><p>Critical hits</p></li>
+				<li><p>Life Orb / Metronome</p></li>
+				<li><p>STAB</p></li>
+				<li><p>Random variance</p></li>
+				<li><p>Type effectiveness</p></li>
+				<li><p>Solid Rock / Filter</p></li>
+				<li><p>Expert Belt</p></li>
+				<li><p>Tinted Lens</p></li>
+				<li><p>Damage-reducing berries</p></li>
+			</ul>
+			
+			<p>Instead, if the move does not deal fixed damage, the raw damage value is multiplied by the AI's effectiveness multiplier, with the step of adjusting STAB omitted. If the move deals fixed damage, it is properly checked for type immunities (i.e. Seismic Toss vs Ghosts) and then its fixed damage is returned as the result.</p>
+			
+			<p>Importantly, the Life Orb and Metronome are ignored by the AI for purposes of checking the damage of a move.</p>
+			
+			<p><b>Damage boosts in these situations are also ignored during damage calculation:</b></p>
+			
+			<ul>
+				<li><p>Recoil moves with the Reckless ability</p></li>
+				<li><p>Stomp against a target that has used Minimize</p></li>
+				<li><p>Facade while the user is statused</p></li>
+				<li><p>SmellingSalt against a paralyzed target</p></li>
+				<li><p>Wake-Up Slap against a sleeping target</p></li>
+				<li><p>Brine against a target that is under 50% HP</p></li>
+				<li><p>Surf or Whirlpool against a target using Dive</p></li>
+				<li><p>Gust or Twister against a target using Fly</p></li>
+				<li><p>Earthquake or Magnitude against a target using Dig</p></li>
+				<li><p>Rollout or Ice Ball after the user has used Defense Curl</p></li>
+				<li><p>Rollout when hitting consecutively</p></li>
+				<li><p>Fury Cutter when hitting consecutively</p></li>
+				<li><p>Weather Ball during sun, rain, hail, or sandstorm</p></li>
+			</ul>
+			
+			<p>Uniquely, damage calculation omits adjusting the type of Weather Ball, resulting in it possibly failing to properly receive STAB or type effectiveness.</p>
+			
+			<p>The move Psywave generates a random power level for damage calculation.</p>
+			
+			<p>The moves Future Sight and Doom Desire have their damage calculated applying STAB and effectiveness, ignoring their normal typeless properties.</p>
+			
+			<p>Multi-strike moves only have a single strike considered.</p>
+			
+			<p>Multipliers used for the <em>input</em> of damage calculation (such as: Choice items / Light Ball / Thick Club / type-boosting items, Light Screen / Reflect, Torrent / Huge Power / Thick Fat, weather type boosts, etc., etc.) are applied as normal. Embargo negating held item effects is also applied. For more information on this, check <a target="_blank" href="https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_IV">the Bulbapedia article on damage calculation</a>, as well as the corresponding article for any specific ability or item to verify its exact mechanism of affecting the damage formula.</p>
+			
+			<h4>Excluded moves</h4>
+			
+			<p>These moves are not accepted for damage calculation. Any attempt to calculate their damage will result in a damage of 0, <em>except</em> when checking the damage of the move previously used by another Pokémon (as in Copycat or Me First). If calculated in this way, moves with a nonregular base power such as Fling, Present, Flail, or Sheer Cold will be treated as having a base power of 1. Full HP will be assumed for Eruption and Water Spout. Magnitude uniquely will generate a random power level if its damage is calculated in this way.</p>
+			
+			<ul>
+				<li>Guillotine</li>
+				<li>Horn Drill</li>
+				<li>Counter</li>
+				<li>Fissure</li>
+				<li>Bide</li>
+				<li>Super Fang</li>
+				<li>Flail</li>
+				<li>Reversal</li>
+				<li>Present</li>
+				<li>Magnitude</li>
+				<li>Mirror Coat</li>
+				<li>Endeavor</li>
+				<li>Sheer Cold</li>
+				<li>Metal Burst</li>
+				<li>Fling</li>
+				<li>Trump Card</li>
+				<li>Wring Out</li>
+				<li>Punishment</li>
+				<li>Crush Grip</li>
+				<li>Selfdestruct</li>
+				<li>Explosion</li>
+				<li>Dream Eater</li>
+				<li>Razor Wind</li>
+				<li>Sky Attack</li>
+				<li>Hyper Beam</li>
+				<li>Hydro Cannon</li>
+				<li>Blast Burn</li>
+				<li>Frenzy Plant</li>
+				<li>Giga Impact</li>
+				<li>Rock Wrecker</li>
+				<li>Roar of Time</li>
+				<li>Skull Bash</li>
+				<li>SolarBeam</li>
+				<li>Spit Up</li>
+				<li>Focus Punch</li>
+				<li>Superpower</li>
+				<li>Eruption</li>
+				<li>Water Spout</li>
+				<li>Sucker Punch</li>
+				<li>Head Smash</li>
+			</ul>
+
+
+
+		<h2>Other notes and quirks</h2>
+		<p>When the AI checks something like "50% chance of score +1 and
+			terminate", this means that the score change happens with probability
+			50%, but the termination happens regardless, unless noted otherwise.</p>
+
+		<p>When the AI checks for HP as a percentage, it first multiplies the
+			current HP by 100, then divides by the max HP, then rounds down.
+			Therefore, for example, a Blissey with 361/362 HP is considered to be at
+			99%, and 54/362 HP is considered to be at 14%. When checks specify "If
+			the user's HP is over 20%...", this means the calculated HP percent must
+			be 21-100.</p>
+
+		<p>Rarely, the AI will compare a Pokémon's HP to 0%; this is not the
+			same thing as being fainted: a Pokémon with 1/101 HP is considered 0%
+			after rounding.</p>
+		<p>When checking if a move deals damage, any move that deals damage in any way counts, including OHKO moves, fixed-damage moves, countering moves, and variable damage moves like Low Kick or Return.</p>
+
+		<p>The AI never considers the accuracy of a move.</p>
+		<hr>
+
+		<p>There are multiple instances where a nonrandom check by the AI is
+			executed multiple times, or is broken and never triggers properly; for
+			clarity, these have been removed.</p>
+
+		<p>Many of these checks are implemented using a jumbled spaghetti
+			system of branching and jumping; I have tried to transcribe them in a
+			way that is as clear and concise as possible with little ambiguity in
+			interpretation, but if something is worded unclearly, do contact me with
+			requests for clarification.</p>
+
+		<p>Generally, read the checks from top to bottom, indenting in a
+			block when the condition above is met, and stop whenever a branch
+			reaches a "terminate".</p>
+
+		<p>Read the checks carefully! There are often times errors left in by
+			the developers; for example, Expert AI scoring Facade checks if the <em>target</em> is afflicted by a status
+			condition instead of the user.</p>
+
+
+</td>
+</tr>
+</table>
+</body>	
+</html>
