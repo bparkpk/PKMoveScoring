@@ -557,348 +557,150 @@ window.onclick = function(event) {
 	<p><a href="index.html">Home Page</a></p>
 </th>
 </tr>
+
 <tr>
 <td>
 </td>
 <td>
-<h1>AI Move Scoring Guide</h1>
-<p>This site, and information within is adapted from the <a
-	href="https://pokemow.com/Gen4/TrainerAI/">Generation 4 site</a> and the <a href="https://will-jj.github.io/gen4to3MowAI/">Generation 3 site</a>
-			for Platinum Kaizo play.
-			During the initial deployment some information in this briefing, and the subsequent move choice scoring may
-			reflect that - please report any issues to BPark16 on Discord</p>
-		<h2>Overview</h2>
-		<p>This page will look up trainer battle AI procedures for the
-			Generation IV Pokémon romhack – Pokémon Platinum Kaizo.</p>
-
-		<p>The Battle AI uses a scoring system to determine which move to use
-			(and which target to use it on, if applicable). Each move starts with a
-			score of 100 (but this starting point is arbitrary), which is then
-			added or subtracted to by the different parts of the scoring procedure.</p>
-
-		<p>Every move is scored on every target on the field (even if that
-			doesn't make sense for the move, such as Swords Dance or Earthquake),
-			with scores being independent for each target. After all scoring is
-			completed, the move and target with the highest score is selected. If
-			multiple moves tie for the highest score, one will be selected from them
-			at random. In double battles, a move is selected for each target first,
-			then if the scores between targets are tied, a target is selected at
-			random.</p>
-
-		<p>Scoring is skipped if the target is fainted, or if the move being
-			scored cannot be selected due to being out of PP or locked out by Taunt,
-			Torment, Choice items, Encore, etc. However, procedures that compare
-			one move to another, such as to check which deals more damage, do <b><em>NOT</em></b> consider if other moves are
-			locked out of use.</p>
-
-		<p>The scoring process is nondeterministic: a given move and target
-			may result in a different score each time it is checked due to
-			randomness within the scoring functions.</p>
-
-		<h2>Move Scoring</h2>
-		<p>The scoring procedure is split into eleven main modules: Basic, Eval Att, Expert, Doubles, Setup First Turn, Risky, Prio Damage, Baton Pass, 		Check HP, Weather, and Harassment.</p>
-
-		<p>As a general rule:</p>
-		<ul>
-			<li>
-				<p><strong>Basic AI</strong> discourages using moves without
-					effect: stat-boosting moves when already at +6, healing moves when
-					already at full HP, status moves when the target is already statused, and non effective moves such as Earthquake
-					on a Flying target.</p>
-			</li>
-
-			<li>
-				<p><strong>Eval Att AI</strong> encourages doing the most damage possible and going for a KO if one is
-					available.</p>
-			</li>
-
-			<li>
-				<p><strong>Expert AI</strong> encourages using smarter strategies on a per-move basis.</p>
-			</li>
-			
-			<li>
-				<p><strong>Doubles AI</strong> discourages using attacks on the
-					ally without a good reason, and checks if moves such as weather or Trick
-					Room will help or harm the ally.</p>
-				<p>
-				</p>
-				<p>Doubles AI is split into two parts: a part for checking
-					attacks against enemies, and a part for checking if there is a reason to
-					attack the ally.</p>
-			</li>
-			<li>
-				<p><strong>Setup First Turn AI</strong> encourages status moves on both the user and opponent in <b>ONLY on the first turn of the entire battle.</b></p>
-			</li>
-			
-			<li>
-				<p><strong>Risky AI</strong> adds a chance of a bonus scoring to certain moves.</p>
-			</li>
-
-			<li>
-				<p><strong>Prio Damage AI</strong> adds a chance of a scoring bonus to certain moves.</p>
-			</li>
-
-			<li>
-				<p><strong>Baton Pass AI</strong> encourages setup moves when at higher HP or early on in the battle.</p>
-			</li>
-			<li>
-				<p><strong>Check HP AI</strong> discourages certain moves at particular HP thresholds.</p>
-			</li>
-			<li>
-				<p><strong>Weather AI</strong> encourages weather setup moes <b>ONLY on the first turn of the entire battle.</b>.</p>
-			</li>
-			<li>
-				<p><strong>Harassment AI</strong> encourages moves that harass or disrupt the opponent.</b>.</p>
-			</li>
-		</ul>
-
-		<p>None, one, or several of these modules run their scoring procedure
-			depending upon the context of the battle. Each module runs
-			independently, and their scores stack together. Only Doubles AI will
-			attempt to use moves on the ally.</p>
-		<h2>The "terminate" keyword within a
-			module means that the scoring of the module is complete, but other
-			modules may still continue on top of the work that it did.</h2>
-
-		<h2>AI knowledge</h2>
-		<p>The AI always knows what item you're holding. It cheats to see it.</p>
-
-		<p>The AI always knows your exact current HP and max HP.</p>
-
-		<p>The AI does <b><em>not</em></b> know your moves until it sees you use
-			them. Other methods that expose moves, such as Sleep Talk or the
-			Forewarn ability, do not count.</p>
-
-		<p>The AI does <em>not</em> know your ability until it sees a text
-			box with the ability name, such as: "... makes ground moves miss using
-			LEVITATE", or "... FLASH FIRE made Flamethrower useless". If the AI does
-			not know your ability, then most times it tries to check what your
-			ability is, it will randomly guess one of the possible abilities your
-			Pokémon's species can normally have. This guess will happen <b>EVERY</b> turn until the AI confirms your ability.<br><br>
-			Abilities that modify damage but do
-			not generate text, like Heatproof or Solid Rock, are not known to the
-			AI even after damage is dealt. However, the AI is aware of the reduced
-			damage that will be inflicted (e.g., for a Heatproof Bronzong, it will
-			assume Levitate 50% of the time, but also will know that the Bronzong
-			may survive a high-damage Fire attack that would KO if it had Levitate).</p>
-
-		<p>Rarely, the AI must specifically see your ability, or your species
-			must not have any other possible ability, in order for a check to
-			succeed; these cases are worded as "If the target's ability is
-			certainly...".</p>
-
-		<p>There is one exception to this: the AI knows if your ability is
-			Shadow Tag, Magnet Pull, or Arena Trap preventing it from switching.</p>
-		<p>The AI always knows the attack order of all Pokémon on the field, barring speed ties or Quick Claws. It knows if there will be a speed tie, but does not know who will win it. If the AI is checking if it will attack before or after another target, and there is a speed tie, it will randomly guess the outcome of the tie. For any Pokémon on the field with a Quick Claw, it will randomly guess the Quick Claw will activate 20% of the time, independent of if the Quick Claw will actually activate.</p>
-
-
-		<p>The AI always knows the exact abilities, items, and moves of itself and its ally.</p>
-
-		<p>If you switch out, the AI will forget its knowledge of your moves and abilities.</p>
-
-		<h2>AI calculations</h2>
-		<h3>Effectiveness</h3>
-		<p>When the AI checks for move effectiveness, it does so regardless of if the move in question is actually
-			damaging.</p>
-<p>If the user has the ability Normalize, the move's type is changed to Normal. Otherwise, if the move is Natural Gift, Hidden Power, Judgment, or Weather Ball, the move is adjusted to its correct type.</p>
-			
-			<p><b>The effectiveness multiplier is initialized to 1x, and then first adjusted by:</p></b>
-			<ul>
-				<li><p>STAB</p></li>
-				<li><p>Adaptability</p></li>
-			</ul>
-			
-			<p><b>The move's calculated type is then checked against the target's type(s), applying:</p></b>
-			<ul>
-				<li><p>Scrappy</p></li>
-				<li><p>Mold Breaker</p></li>
-				<li><p>Odor Sleuth / Foresight</p></li>
-				<li><p>Gastro Acid</p></li>
-				<li><p>Miracle Eye</p></li>
-				<li><p>Roost / Ingrain / Iron Ball / Gravity</p></li>
-				<li><p>Magnet Rise / Levitate</p></li>
-				<li><p>Wonder Guard</p></li>
-			</ul>
-			
-			<p><b>Subsequently, if the move deals damage at all (including OHKO moves, countering moves, etc.), the check applies:</p></b>
-			<ul>
-				<li><p>Tinted Lens</p></li>
-				<li><p>Expert Belt</p></li>
-				<li><p>Filter / Solid Rock</p></li>
-			</ul>
-			
-			<p><b>The resulting multiplier is returned as the total effectiveness of the move.</p>
-			
-			<p>All of these other factors are always ignored:</p></b>
-			<ul>
-				<li><p>Water Absorb</p></li>
-				<li><p>Flash Fire</p></li>
-				<li><p>Motor Drive</p></li>
-				<li><p>Volt Absorb</p></li>
-				<li><p>Dry Skin</p></li>
-				<li><p>Soundproof</p></li>
-				<li><p>Damp</p></li>
-				<li><p>If the move deals fixed damage</p></li>
-			</ul>
-			
-			<p>The effectiveness check specifically cheats and checks if your ability is Filter, Solid Rock, Levitate, or Wonder Guard, and returns an appropriate multiplier. This means that, for example, if you have a Levitate Bronzong, the AI will see Earthquake as 0x effective. But, if you have a Heatproof Bronzong, the AI will see that Earthquake is 2x effective, but will still, 50% of the time, guess that it has Levitate and avoid picking it.</p>
-			
-			<p>If the overall effectiveness as a result of this check is exactly 0.375x, 0.75x, 3x, or 6x, it makes the assumption that this must be STAB boosted and adjusts the effectiveness to 0.25x, 0.5x, 2x, and 4x, respectively. This adjustment occurs even if the move is not actually STAB boosted (for instance, 4x supereffective vs Solid Rock results in a 3x multiplier, which is then adjusted to 2x).</p>
-			
-			<p>Therefore, when the AI runs a check on a condition such as "If the move is 4x supereffective...", this works normally for STAB and non-STAB moves, but may fail to trigger properly when Adaptability, Expert Belt, Tinted Lens, or Filter / Solid Rock are in effect.</p>
-			
-			<h3>If a Pokémon has a supereffective move</h3>
-			
-			<p>When checking specifically if a Pokémon has a move to hit a target supereffectively, rather than using the effectiveness multiplier, it will check the flag that would generate the "It's super effective!" text. This means no Expert Belt, Filter / Solid Rock, Adaptability, fixed-damage move, or nondamaging move would interfere.</p>
-			
-			<p>However, this check is subject to a different bug known as the <em>dual non-immunity glitch</em>. Dual-type Pokémon have their two types checked in type-table order, and if the first type is immune to the attacking move, and the second type is weak to the attacking move, then the weakness flag is still set, alongside the existing immunity flag. If the immune type comes second in the type table, these flags would both be cleared.</p>
-			
-			<p>In practice, this glitch has these consequences:</p>
-			
-			<ul>
-				<li><p>Gligar and Gliscor are considered weak to Electric</p></li>
-				<li><p>Aerodactyl is considered weak to Ground</p></li>
-				<li><p>Skarmory is considered weak to Ground</p></li>
-				<li><p>Girafarig is considered weak to Ghost</p></li>
-			</ul>
-			
-			<h3>Damage</h3>
-			
-			<p>When the AI checks how much damage a move will deal, it uses the game's normal and correct procedure for calculating damage for that move, but without any of the multipliers used on the <em>output</em> of damage calculation:</p>
-			<ul>
-				<li><p>Critical hits</p></li>
-				<li><p>Life Orb / Metronome</p></li>
-				<li><p>STAB</p></li>
-				<li><p>Random variance</p></li>
-				<li><p>Type effectiveness</p></li>
-				<li><p>Solid Rock / Filter</p></li>
-				<li><p>Expert Belt</p></li>
-				<li><p>Tinted Lens</p></li>
-				<li><p>Damage-reducing berries</p></li>
-			</ul>
-			
-			<p>Instead, if the move does not deal fixed damage, the raw damage value is multiplied by the AI's effectiveness multiplier, with the step of adjusting STAB omitted. If the move deals fixed damage, it is properly checked for type immunities (i.e. Seismic Toss vs Ghosts) and then its fixed damage is returned as the result.</p>
-			
-			<p>Importantly, the Life Orb and Metronome are ignored by the AI for purposes of checking the damage of a move.</p>
-			
-			<p><b>Damage boosts in these situations are also ignored during damage calculation:</b></p>
-			
-			<ul>
-				<li><p>Recoil moves with the Reckless ability</p></li>
-				<li><p>Stomp against a target that has used Minimize</p></li>
-				<li><p>Facade while the user is statused</p></li>
-				<li><p>SmellingSalt against a paralyzed target</p></li>
-				<li><p>Wake-Up Slap against a sleeping target</p></li>
-				<li><p>Brine against a target that is under 50% HP</p></li>
-				<li><p>Surf or Whirlpool against a target using Dive</p></li>
-				<li><p>Gust or Twister against a target using Fly</p></li>
-				<li><p>Earthquake or Magnitude against a target using Dig</p></li>
-				<li><p>Rollout or Ice Ball after the user has used Defense Curl</p></li>
-				<li><p>Rollout when hitting consecutively</p></li>
-				<li><p>Fury Cutter when hitting consecutively</p></li>
-				<li><p>Weather Ball during sun, rain, hail, or sandstorm</p></li>
-			</ul>
-			
-			<p>Uniquely, damage calculation omits adjusting the type of Weather Ball, resulting in it possibly failing to properly receive STAB or type effectiveness.</p>
-			
-			<p>The move Psywave generates a random power level for damage calculation.</p>
-			
-			<p>The moves Future Sight and Doom Desire have their damage calculated applying STAB and effectiveness, ignoring their normal typeless properties.</p>
-			
-			<p>Multi-strike moves only have a single strike considered.</p>
-			
-			<p>Multipliers used for the <em>input</em> of damage calculation (such as: Choice items / Light Ball / Thick Club / type-boosting items, Light Screen / Reflect, Torrent / Huge Power / Thick Fat, weather type boosts, etc., etc.) are applied as normal. Embargo negating held item effects is also applied. For more information on this, check <a target="_blank" href="https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_IV">the Bulbapedia article on damage calculation</a>, as well as the corresponding article for any specific ability or item to verify its exact mechanism of affecting the damage formula.</p>
-			
-			<h4>Excluded moves</h4>
-			
-			<p>These moves are not accepted for damage calculation. Any attempt to calculate their damage will result in a damage of 0, <em>except</em> when checking the damage of the move previously used by another Pokémon (as in Copycat or Me First). If calculated in this way, moves with a nonregular base power such as Fling, Present, Flail, or Sheer Cold will be treated as having a base power of 1. Full HP will be assumed for Eruption and Water Spout. Magnitude uniquely will generate a random power level if its damage is calculated in this way.</p>
-			
-			<ul>
-				<li>Guillotine</li>
-				<li>Horn Drill</li>
-				<li>Counter</li>
-				<li>Fissure</li>
-				<li>Bide</li>
-				<li>Super Fang</li>
-				<li>Flail</li>
-				<li>Reversal</li>
-				<li>Present</li>
-				<li>Magnitude</li>
-				<li>Mirror Coat</li>
-				<li>Endeavor</li>
-				<li>Sheer Cold</li>
-				<li>Metal Burst</li>
-				<li>Fling</li>
-				<li>Trump Card</li>
-				<li>Wring Out</li>
-				<li>Punishment</li>
-				<li>Crush Grip</li>
-				<li>Selfdestruct</li>
-				<li>Explosion</li>
-				<li>Dream Eater</li>
-				<li>Razor Wind</li>
-				<li>Sky Attack</li>
-				<li>Hyper Beam</li>
-				<li>Hydro Cannon</li>
-				<li>Blast Burn</li>
-				<li>Frenzy Plant</li>
-				<li>Giga Impact</li>
-				<li>Rock Wrecker</li>
-				<li>Roar of Time</li>
-				<li>Skull Bash</li>
-				<li>SolarBeam</li>
-				<li>Spit Up</li>
-				<li>Focus Punch</li>
-				<li>Superpower</li>
-				<li>Eruption</li>
-				<li>Water Spout</li>
-				<li>Sucker Punch</li>
-				<li>Head Smash</li>
-			</ul>
-
-
-
-		<h2>Other notes and quirks</h2>
-		<p>When the AI checks something like "50% chance of score +1 and
-			terminate", this means that the score change happens with probability
-			50%, but the termination happens regardless, unless noted otherwise.</p>
-
-		<p>When the AI checks for HP as a percentage, it first multiplies the
-			current HP by 100, then divides by the max HP, then rounds down.
-			Therefore, for example, a Blissey with 361/362 HP is considered to be at
-			99%, and 54/362 HP is considered to be at 14%. When checks specify "If
-			the user's HP is over 20%...", this means the calculated HP percent must
-			be 21-100.</p>
-
-		<p>Rarely, the AI will compare a Pokémon's HP to 0%; this is not the
-			same thing as being fainted: a Pokémon with 1/101 HP is considered 0%
-			after rounding.</p>
-		<p>When checking if a move deals damage, any move that deals damage in any way counts, including OHKO moves, fixed-damage moves, countering moves, and variable damage moves like Low Kick or Return.</p>
-
-		<p>The AI never considers the accuracy of a move.</p>
-		<hr>
-
-		<p>There are multiple instances where a nonrandom check by the AI is
-			executed multiple times, or is broken and never triggers properly; for
-			clarity, these have been removed.</p>
-
-		<p>Many of these checks are implemented using a jumbled spaghetti
-			system of branching and jumping; I have tried to transcribe them in a
-			way that is as clear and concise as possible with little ambiguity in
-			interpretation, but if something is worded unclearly, do contact me with
-			requests for clarification.</p>
-
-		<p>Generally, read the checks from top to bottom, indenting in a
-			block when the condition above is met, and stop whenever a branch
-			reaches a "terminate".</p>
-
-		<p>Read the checks carefully! There are often times errors left in by
-			the developers; for example, Expert AI scoring Facade checks if the <em>target</em> is afflicted by a status
-			condition instead of the user.</p>
-
-
+<h1>Dive</h1>
 </td>
 </tr>
+
+<tr>
+<td>
+</td>
+<td style="background-color:#F6FA0A">
+<h2 style="color:black;">Basic</h2>
+<p style="color:black;">If the effectiveness of the move is 0x:<br>
+Score -10 and terminate<br><br>
+
+If the target's ability is Water Absorb or Dry Skin, and the user's ability is not Mold Breaker:<br>
+Score -12 and terminate<br><br>
+
+If the target's ability is Wonder Guard, and the effectiveness of the move is not 2x or 4x, and the user's ability is not Mold Breaker:<br>
+Score -12 and terminate<br><br></p>
+
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#F7D10F;">
+<h2 style="color:black;">Eval Att</h2>
+<p style="color:black;">If the move can KO the target:<br>
+Score +4 and terminate<br><br>
+
+If the move cannot KO the target, and a different move the user knows would do more damage to the target:<br>
+Score -1 and terminate<br><br>
+
+If the effectiveness of the move is 4x:<br>
+68.8% (176/256) chance of score +2 and terminate<br><br></p>
+
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#F79A0F;">
+<h2 style="color:black;">Expert</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#0FF7E4;">
+<h2 style="color:black;">Doubles vs Opponent</h2>
+<p style="color:black;">If the move cannot KO the target, and the user's ally's HP is over 0% (after rounding):<br>
+If the effectiveness of the move is 1/2x:<br>
+75% (192/256) chance of score -1 and continue<br><br>
+If the effectiveness of the move is 1/4x:<br>
+75% (192/256) chance of score -2 and continue<br><br>
+If the move deals the most damage to the target when considering all of the user's ally's moves as well (regardless of if the ally is alive):<br>
+50% (128/256) chance of score +1 and continue<br><br>
+If the move did not receive a score +1 in the previous check:<br>
+If the effectiveness of the move is 2x:<br>
+60.9% (156/256) chance of score +1 and continue<br><br>
+If the effectiveness of the move is 4x:<br>
+75% (192/256) chance of score +1 and continue<br><br>
+If the target's ally's ability is certainly Storm Drain:<br>
+Score -1 and continue<br><br>
+If the user's ally's ability is Storm Drain:<br>
+Score -10 and terminate</p>
+	
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#0792DB">	
+<h2 style="color:black;">Doubles vs Ally</h2>
+<p style="color:black;">If the target's ability is Water Absorb or Dry Skin:<br>
+If the target is at full HP:<br>
+Score -10 and terminate<br><br>
+If the target's HP is over 90%:<br>
+No scoring change and terminate<br><br>
+If the target's HP is over 75%:<br>
+25% (64/256) chance of score +3 and terminate<br><br>
+If the target's HP is over 50%:<br>
+50% (128/256) chance of score +3 and terminate<br><br>
+Otherwise:<br>
+75% (192/256) chance of score +3 and terminate<br><br>
+Otherwise:<br>
+Score -30 and terminate</p>
+	
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#FA197B">		
+<h2 style="color:black;">Setup First Turn</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#ED1602">		
+<h2 style="color:black;">Risky</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#FA7619">		
+<h2 style="color:black;">Prio Damage</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#FA19C5">		
+<h2 style="color:black;">Baton Pass</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#6CFA19">		
+<h2 style="color:black;">Check HP</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#1937FA">		
+<h2 style="color:black;">Weather</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#0B9E1E">		
+<h2 style="color:black;">Harassment</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+	
+</td>
+</tr>
+
+
+
 </table>
 </body>	
 </html>
