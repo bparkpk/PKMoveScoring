@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<title>Platinum Kaizo AI Move Scoring</title>
+<meta name="viewport" content="width=600">
+<style>
+body {background-color: #5E5E5E; color: white;}
+h1 {text-align:center; color: white;}
+h2 {text-align:center; color: white;}
+h3 {text-align:center; color: white;}
+p {text-align:center; color: white;}
+
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  height: 480px;
+  overflow: scroll;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style></head>
+
+<body>
+<table>
+<tr>
+<th>
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Select Move</button>
+
+  <div id="myDropdown" class="dropdown-content">
+<a href="moveAbsorb.html">Absorb</a>
+<a href="moveAccelerock.html">Accelerock</a>
+<a href="moveAcid.html">Acid</a>
+<a href="moveAcidArmor.html">Acid Armor</a>
+<a href="moveAcupressure.html">Acupressure</a>
+<a href="moveAerialAce.html">Aerial Ace</a>
+<a href="moveAeroblast.html">Aeroblast</a>
+<a href="moveAgility.html">Agility</a>
+<a href="moveAirCutter.html">Air Cutter</a>
+<a href="moveAirSlash.html">Air Slash</a>
+<a href="moveAmnesia.html">Amnesia</a>
+<a href="moveAncientPower.html">AncientPower</a>
+<a href="moveAquaCutter.html">Aqua Cutter</a>
+<a href="moveAquaJet.html">Aqua Jet</a>
+<a href="moveAquaRing.html">Aqua Ring</a>
+<a href="moveAquaTail.html">Aqua Tail</a>
+<a href="moveAromatherapy.html">Aromatherapy</a>
+<a href="moveAssist.html">Assist</a>
+<a href="moveAssurance.html">Assurance</a>
+<a href="moveAstonish.html">Astonish</a>
+<a href="moveAttackOrder.html">Attack Order</a>
+<a href="moveAttract.html">Attract</a>
+<a href="moveAuraSphere.html">Aura Sphere</a>
+<a href="moveAurora Beam.html">Aurora Beam</a>
+<a href="moveAvalanche.html">Avalanche</a>
+<a href="moveBarrier.html">Barrier</a>
+<a href="moveBatonPass.html">Baton Pass</a>
+<a href="moveBeatUp.html">Beat Up</a>
+<a href="moveBellyDrum.html">Belly Drum</a>
+<a href="moveBide.html">Bide</a>
+<a href="moveBite.html">Bite</a>
+<a href="moveBlastBurn.html">Blast Burn</a>
+<a href="moveBlazeKick.html">Blaze Kick</a>
+<a href="moveBlizzard.html">Blizzard</a>
+<a href="moveBlock.html">Block</a>
+<a href="moveBodySlam.html">Body Slam</a>
+<a href="moveBoneClub.html">Bone Club</a>
+<a href="moveBoneRush.html">Bone Rush</a>
+<a href="moveBonemerang.html">Bonemerang</a>
+<a href="moveBounce.html">Bounce</a>
+<a href="moveBraveBird.html">Brave Bird</a>
+<a href="moveBrickBreak.html">Brick Break</a>
+<a href="moveBrine.html">Brine</a>
+<a href="moveBubble.html">Bubble</a>
+<a href="moveBubbleBeam.html">BubbleBeam</a>
+<a href="moveBugBite.html">Bug Bite</a>
+<a href="moveBugBuzz.html">Bug Buzz</a>
+<a href="moveBulkUp.html">Bulk Up</a>
+<a href="moveBulldoze.html">Bulldoze</a>
+<a href="moveBulletPunch.html">Bullet Punch</a>
+<a href="moveBulletSeed.html">Bullet Seed</a>
+<a href="moveCalmMind.html">Calm Mind</a>
+<a href="moveCamouflage.html">Camouflage</a>
+<a href="moveCaptivate.html">Captivate</a>
+<a href="moveCharge.html">Charge</a>
+<a href="moveChargeBeam.html">Charge Beam</a>
+<a href="moveCharm.html">Charm</a>
+<a href="moveChatter.html">Chatter</a>
+<a href="moveClamp.html">Clamp</a>
+<a href="moveCloseCombat.html">Close Combat</a>
+<a href="moveConfuseRay.html">Confuse Ray</a>
+<a href="moveConfusion.html">Confusion</a>
+<a href="moveConstrict.html">Constrict</a>
+<a href="moveConversion2.html">Conversion 2</a>
+<a href="moveCopycat.html">Copycat</a>
+<a href="moveCosmicPower.html">Cosmic Power</a>
+<a href="moveCottonSpore.html">Cotton Spore</a>
+<a href="moveCounter.html">Counter</a>
+<a href="moveCrabhammer.html">Crabhammer</a>
+<a href="moveCrossChop.html">Cross Chop</a>
+<a href="moveCrossPoison.html">Cross Poison</a>
+<a href="moveCrunch.html">Crunch</a>
+<a href="moveCrushClaw.html">Crush Claw</a>
+<a href="moveCrushGrip.html">Crush Grip</a>
+<a href="moveCurse.html">Curse</a>
+<a href="moveCut.html">Cut</a>
+<a href="moveDarkPulse.html">Dark Pulse</a>
+<a href="moveDarkVoid.html">Dark Void</a>
+<a href="moveDefend Order.html">Defend Order</a>
+<a href="moveDefog.html">Defog</a>
+<a href="moveDestinyBond.html">Destiny Bond</a>
+<a href="moveDetect.html">Detect</a>
+<a href="moveDig.html">Dig</a>
+<a href="moveDisable.html">Disable</a>
+<a href="moveDischarge.html">Discharge</a>
+<a href="moveDive.html">Dive</a>
+<a href="moveDizzyPunch.html">Dizzy Punch</a>
+<a href="moveDoom Desire.html">Doom Desire</a>
+<a href="moveDoubleHit.html">Double Hit</a>
+<a href="moveDoubleKick.html">Double Kick</a>
+<a href="moveDoubleTeam.html">Double Team</a>
+<a href="moveDoubleEdge.html">Double-Edge</a>
+<a href="moveDoubleSlap.html">DoubleSlap</a>
+<a href="moveDracoMeteor.html">Draco Meteor</a>
+<a href="moveDragonClaw.html">Dragon Claw</a>
+<a href="moveDragonDance.html">Dragon Dance</a>
+<a href="moveDragonPulse.html">Dragon Pulse</a>
+<a href="moveDragonRage.html">Dragon Rage</a>
+<a href="moveDragonRush.html">Dragon Rush</a>
+<a href="moveDragonBreath.html">DragonBreath</a>
+<a href="moveDrainPunch.html">Drain Punch</a>
+<a href="moveDreamEater.html">Dream Eater</a>
+<a href="moveDrillPeck.html">Drill Peck</a>
+<a href="moveDrillRun.html">Drill Run</a>
+<a href="moveDynamicPunch.html">DynamicPunch</a>
+<a href="moveEarthPower.html">Earth Power</a>
+<a href="moveEarthquake.html">Earthquake</a>
+<a href="moveEggBomb.html">Egg Bomb</a>
+<a href="moveEmbargo.html">Embargo</a>
+<a href="moveEmber.html">Ember</a>
+<a href="moveEncore.html">Encore</a>
+<a href="moveEndeavor.html">Endeavor</a>
+<a href="moveEndure.html">Endure</a>
+<a href="moveEnergyBall.html">Energy Ball</a>
+<a href="moveEruption.html">Eruption</a>
+<a href="moveExplosion.html">Explosion</a>
+<a href="moveExtrasensory.html">Extrasensory</a>
+<a href="moveExtremeSpeed.html">ExtremeSpeed</a>
+<a href="moveFacade.html">Facade</a>
+<a href="moveFaintAttack.html">Faint Attack</a>
+<a href="moveFakeOut.html">Fake Out</a>
+<a href="moveFakeTears.html">Fake Tears</a>
+<a href="moveFalseSwipe.html">False Swipe</a>
+<a href="moveFeatherDance.html">FeatherDance</a>
+<a href="moveFeint.html">Feint</a>
+<a href="moveFireBall.html">Fire Ball</a>
+<a href="moveFireBlast.html">Fire Blast</a>
+<a href="moveFireFang.html">Fire Fang</a>
+<a href="moveFirePunch.html">Fire Punch</a>
+<a href="moveFireSpin.html">Fire Spin</a>
+<a href="moveFissure.html">Fissure</a>
+<a href="moveFlail.html">Flail</a>
+<a href="moveFlameWheel.html">Flame Wheel</a>
+<a href="moveFlamethrower.html">Flamethrower</a>
+<a href="moveFlareBlitz.html">Flare Blitz</a>
+<a href="moveFlash.html">Flash</a>
+<a href="moveFlashCannon.html">Flash Cannon</a>
+<a href="moveFlatter.html">Flatter</a>
+<a href="moveFling.html">Fling</a>
+<a href="moveFly.html">Fly</a>
+<a href="moveFocusBlast.html">Focus Blast</a>
+<a href="moveFocusEnergy.html">Focus Energy</a>
+<a href="moveFocusPunch.html">Focus Punch</a>
+<a href="moveFollowMe.html">Follow Me</a>
+<a href="moveForcePalm.html">Force Palm</a>
+<a href="moveForesight.html">Foresight</a>
+<a href="moveFrenzyPlant.html">Frenzy Plant</a>
+<a href="moveFrustration.html">Frustration</a>
+<a href="moveFuryAttack.html">Fury Attack</a>
+<a href="moveFuryCutter.html">Fury Cutter</a>
+<a href="moveFurySwipes.html">Fury Swipes</a>
+<a href="moveFutureSight.html">Future Sight</a>
+<a href="moveGastroAcid.html">Gastro Acid</a>
+<a href="moveGigaDrain.html">Giga Drain</a>
+<a href="moveGigaImpact.html">Giga Impact</a>
+<a href="moveGlare.html">Glare</a>
+<a href="moveGrassKnot.html">Grass Knot</a>
+<a href="moveGrassWhistle.html">GrassWhistle</a>
+<a href="moveGravity.html">Gravity</a>
+<a href="moveGrowl.html">Growl</a>
+<a href="moveGrowth.html">Growth</a>
+<a href="moveGrudge.html">Grudge</a>
+<a href="moveGuardSwap.html">Guard Swap</a>
+<a href="moveGuillotine.html">Guillotine</a>
+<a href="moveGunkShot.html">Gunk Shot</a>
+<a href="moveGust.html">Gust</a>
+<a href="moveGyroBall.html">Gyro Ball</a>
+<a href="moveHail.html">Hail</a>
+<a href="moveHailBall.html">Hail Ball</a>
+<a href="moveHammerArm.html">Hammer Arm</a>
+<a href="moveHarden.html">Harden</a>
+<a href="moveHaze.html">Haze</a>
+<a href="moveHeadSmash.html">Head Smash</a>
+<a href="moveHeadbutt.html">Headbutt</a>
+<a href="moveHealBell.html">Heal Bell</a>
+<a href="moveHealOrder.html">Heal Order</a>
+<a href="moveHeartSwap.html">Heart Swap</a>
+<a href="moveHeatWave.html">Heat Wave</a>
+<a href="moveHelpingHand.html">Helping Hand</a>
+<a href="moveHiJumpKick.html">Hi Jump Kick</a>
+<a href="moveHiddenPower.html">Hidden Power</a>
+<a href="moveHornDrill.html">Horn Drill</a>
+<a href="moveHowl.html">Howl</a>
+<a href="moveHPDark.html">HP Dark</a>
+<a href="moveHPElectric.html">HP Electric</a>
+<a href="moveHPFighting.html">HP Fighting</a>
+<a href="moveHPFire.html">HP Fire</a>
+<a href="moveHPFlying.html">HP Flying</a>
+<a href="moveHPGhost.html">HP Ghost</a>
+<a href="moveHPGrass.html">HP Grass</a>
+<a href="moveHPGround.html">HP Ground</a>
+<a href="moveHPIce.html">HP Ice</a>
+<a href="moveHPPsychic.html">HP Psychic</a>
+<a href="moveHPRock.html">HP Rock</a>
+<a href="moveHPWater.html">HP Water</a>
+<a href="moveHurricane.html">Hurricane</a>
+<a href="moveHydr Cannon.html">Hydro Cannon</a>
+<a href="moveHydroPump.html">Hydro Pump</a>
+<a href="moveHyperBeam.html">Hyper Beam</a>
+<a href="moveHyperFang.html">Hyper Fang</a>
+<a href="moveHyperVoice.html">Hyper Voice</a>
+<a href="moveHypnosis.html">Hypnosis</a>
+<a href="moveIceBall.html">Ice Ball</a>
+<a href="moveIceBeam.html">Ice Beam</a>
+<a href="moveIceFang.html">Ice Fang</a>
+<a href="moveIcePunch.html">Ice Punch</a>
+<a href="moveIceShard.html">Ice Shard</a>
+<a href="moveIcicleSpear.html">Icicle Spear</a>
+<a href="moveIcyWind.html">Icy Wind</a>
+<a href="moveImprison.html">Imprison</a>
+<a href="moveIngrain.html">Ingrain</a>
+<a href="moveIronDefense.html">Iron Defense</a>
+<a href="moveIronHead.html">Iron Head</a>
+<a href="moveIronTail.html">Iron Tail</a>
+<a href="moveJudgment.html">Judgment</a>
+<a href="moveJumpKick.html">Jump Kick</a>
+<a href="moveKarateChop.html">Karate Chop</a>
+<a href="moveKinesis.html">Kinesis</a>
+<a href="moveKnockOff.html">Knock Off</a>
+<a href="moveLastResort.html">Last Resort</a>
+<a href="moveLavaPlume.html">Lava Plume</a>
+<a href="moveLeafBlade.html">Leaf Blade</a>
+<a href="moveLeafStorm.html">Leaf Storm</a>
+<a href="moveLeechLife.html">Leech Life</a>
+<a href="moveLeechSeed.html">Leech Seed</a>
+<a href="moveLeer.html">Leer</a>
+<a href="moveLick.html">Lick</a>
+<a href="moveLightScreen.html">Light Screen</a>
+<a href="moveLockOn.html">Lock-On</a>
+<a href="moveLovelyKiss.html">Lovely Kiss</a>
+<a href="moveLowKick.html">Low Kick</a>
+<a href="moveLuckyChant.html">Lucky Chant</a>
+<a href="moveLunarDance.html">Lunar Dance</a>
+<a href="moveLusterPurge.html">Luster Purge</a>
+<a href="moveMachPunch.html">Mach Punch</a>
+<a href="moveMagicCoat.html">Magic Coat</a>
+<a href="moveMagicalLeaf.html">Magical Leaf</a>
+<a href="moveMagmaStorm.html">Magma Storm</a>
+<a href="moveMagnetBomb.html">Magnet Bomb</a>
+<a href="moveMagnetRise.html">Magnet Rise</a>
+<a href="moveMeFirst.html">Me First</a>
+<a href="moveMeanLook.html">Mean Look</a>
+<a href="moveMeditate.html">Meditate</a>
+<a href="moveMegaDrain.html">Mega Drain</a>
+<a href="moveMegaKick.html">Mega Kick</a>
+<a href="moveMegaPunch.html">Mega Punch</a>
+<a href="moveMegahorn.html">Megahorn</a>
+<a href="moveMemento.html">Memento</a>
+<a href="moveMetalBurst.html">Metal Burst</a>
+<a href="moveMetalClaw.html">Metal Claw</a>
+<a href="moveMetalSound.html">Metal Sound</a>
+<a href="moveMeteorMash.html">Meteor Mash</a>
+<a href="moveMetronome.html">Metronome</a>
+<a href="moveMilkDrink.html">Milk Drink</a>
+<a href="moveMimic.html">Mimic</a>
+<a href="moveMindReader.html">Mind Reader</a>
+<a href="moveMinimize.html">Minimize</a>
+<a href="moveMiracleEye.html">Miracle Eye</a>
+<a href="moveMirrorCoat.html">Mirror Coat</a>
+<a href="moveMirrorMove.html">Mirror Move</a>
+<a href="moveMirrorShot.html">Mirror Shot</a>
+<a href="moveMist.html">Mist</a>
+<a href="moveMistBall.html">Mist Ball</a>
+<a href="moveMoonlight.html">Moonlight</a>
+<a href="moveMorningSun.html">Morning Sun</a>
+<a href="moveMudBomb.html">Mud Bomb</a>
+<a href="moveMudShot.html">Mud Shot</a>
+<a href="moveMudSlap.html">Mud-Slap</a>
+<a href="moveMuddyWater.html">Muddy Water</a>
+<a href="moveMysticalFire.html">Mystical Fire</a>
+<a href="moveNastyPlot.html">Nasty Plot</a>
+<a href="moveNaturalGift.html">Natural Gift</a>
+<a href="moveNaturePower.html">Nature Power</a>
+<a href="moveNeedleArm.html">Needle Arm</a>
+<a href="moveNightShade.html">Night Shade</a>
+<a href="moveNightSlash.html">Night Slash</a>
+<a href="moveOctazooka.html">Octazooka</a>
+<a href="moveOdorSleuth.html">Odor Sleuth</a>
+<a href="moveOminousWind.html">Ominous Wind</a>
+<a href="moveOutrage.html">Outrage</a>
+<a href="moveOverheat.html">Overheat</a>
+<a href="movePainSplit.html">Pain Split</a>
+<a href="movePayDay.html">Pay Day</a>
+<a href="movePayback.html">Payback</a>
+<a href="movePeck.html">Peck</a>
+<a href="movePerishSong.html">Perish Song</a>
+<a href="movePetalDance.html">Petal Dance</a>
+<a href="movePinMissile.html">Pin Missile</a>
+<a href="movePluck.html">Pluck</a>
+<a href="movePoisonFang.html">Poison Fang</a>
+<a href="movePoisonGas.html">Poison Gas</a>
+<a href="movePoisonJab.html">Poison Jab</a>
+<a href="movePoisonSting.html">Poison Sting</a>
+<a href="movePoisonTail.html">Poison Tail</a>
+<a href="movePoisonPowder.html">PoisonPowder</a>
+<a href="movePound.html">Pound</a>
+<a href="movePowderSnow.html">Powder Snow</a>
+<a href="movePowerGem.html">Power Gem</a>
+<a href="movePowerSwap.html">Power Swap</a>
+<a href="movePowerTrick.html">Power Trick</a>
+<a href="movePowerWhip.html">Power Whip</a>
+<a href="movePresent.html">Present</a>
+<a href="moveProtect.html">Protect</a>
+<a href="movePsybeam.html">Psybeam</a>
+<a href="movePsychUp.html">Psych Up</a>
+<a href="movePsychic.html">Psychic</a>
+<a href="movePsychoBoost.html">Psycho Boost</a>
+<a href="movePsychoCut.html">Psycho Cut</a>
+<a href="movePsychoShift.html">Psycho Shift</a>
+<a href="movePunishment.html">Punishment</a>
+<a href="movePursuit.html">Pursuit</a>
+<a href="moveQuickAttack.html">Quick Attack</a>
+<a href="moveRage.html">Rage</a>
+<a href="moveRainDance.html">Rain Dance</a>
+<a href="moveRazorLeaf.html">Razor Leaf</a>
+<a href="moveRazorWind.html">Razor Wind</a>
+<a href="moveRecover.html">Recover</a>
+<a href="moveRecycle.html">Recycle</a>
+<a href="moveReflect.html">Reflect</a>
+<a href="moveRefresh.html">Refresh</a>
+<a href="moveRest.html">Rest</a>
+<a href="moveReturn.html">Return</a>
+<a href="moveRevenge.html">Revenge</a>
+<a href="moveReversal.html">Reversal</a>
+<a href="moveRoar.html">Roar</a>
+<a href="moveRoarofTime.html">Roar of Time</a>
+<a href="moveRockBall.html">Rock Ball</a>
+<a href="moveRockBlast.html">Rock Blast</a>
+<a href="moveRockClimb.html">Rock Climb</a>
+<a href="moveRockPolish.html">Rock Polish</a>
+<a href="moveRockSlide.html">Rock Slide</a>
+<a href="moveRockSmash.html">Rock Smash</a>
+<a href="moveRockThrow.html">Rock Throw</a>
+<a href="moveRockTomb.html">Rock Tomb</a>
+<a href="moveRockWrecker.html">Rock Wrecker</a>
+<a href="moveRolePlay.html">Role Play</a>
+<a href="moveRollingKick.html">Rolling Kick</a>
+<a href="moveRoost.html">Roost</a>
+<a href="moveSacredFire.html">Sacred Fire</a>
+<a href="moveSafeguard.html">Safeguard</a>
+<a href="moveSandTomb.html">Sand Tomb</a>
+<a href="moveSandAttack.html">Sand-Attack</a>
+<a href="moveSandstorm.html">Sandstorm</a>
+<a href="moveScald.html">Scald</a>
+<a href="moveScaryFace.html">Scary Face</a>
+<a href="moveScratch.html">Scratch</a>
+<a href="moveScreech.html">Screech</a>
+<a href="moveSecretPower.html">Secret Power</a>
+<a href="moveSeedBomb.html">Seed Bomb</a>
+<a href="moveSeedFlare.html">Seed Flare</a>
+<a href="moveSeismicToss.html">Seismic Toss</a>
+<a href="moveSelfdestruct.html">Selfdestruct</a>
+<a href="moveShadowBall.html">Shadow Ball</a>
+<a href="moveShadowClaw.html">Shadow Claw</a>
+<a href="moveShadowForce.html">Shadow Force</a>
+<a href="moveShadowPunch.html">Shadow Punch</a>
+<a href="moveShadowSneak.html">Shadow Sneak</a>
+<a href="moveSharpen.html">Sharpen</a>
+<a href="moveSheerCold.html">Sheer Cold</a>
+<a href="moveShockWave.html">Shock Wave</a>
+<a href="moveSignalBeam.html">Signal Beam</a>
+<a href="moveSilverWind.html">Silver Wind</a>
+<a href="moveSing.html">Sing</a>
+<a href="moveSketch.html">Sketch</a>
+<a href="moveSkill Swap.html">Skill Swap</a>
+<a href="moveSkyAttack.html">Sky Attack</a>
+<a href="moveSkyUppercut.html">Sky Uppercut</a> 
+<a href="moveSlackOff.html">Slack Off</a>
+<a href="moveSlam.html">Slam</a>
+<a href="moveSlash.html">Slash</a>
+<a href="moveSleepPowder.html">Sleep Powder</a>
+<a href="moveSleepTalk.html">Sleep Talk</a>
+<a href="moveSludge.html">Sludge</a>
+<a href="moveSludgeBomb.html">Sludge Bomb</a>
+<a href="moveSmellingSalt.html">SmellingSalt</a>
+<a href="moveSmog.html">Smog</a>
+<a href="moveSmokeScreen.html">SmokeScreen</a>
+<a href="moveSnore.html">Snore</a>
+<a href="moveSoftboiled.html">Softboiled</a>
+<a href="moveSolarBeam.html">Solar-Beam</a>
+<a href="moveSolarBeam2.html">SolarBeam</a>
+<a href="moveSonicBoom.html">SonicBoom</a>
+<a href="moveSpacialRend.html">Spacial Rend</a>
+<a href="moveSpiderWeb.html">Spider Web</a>
+<a href="moveSpikes.html">Spikes</a>
+<a href="moveSpite.html">Spite</a>
+<a href="moveSpore.html">Spore</a>
+<a href="moveStealthRock.html">Stealth Rock</a>
+<a href="moveSteelWing.html">Steel Wing</a>
+<a href="moveStockpile.html">Stockpile</a>
+<a href="moveStomp.html">Stomp</a>
+<a href="moveStoneEdge.html">Stone Edge</a>
+<a href="moveStrength.html">Strength</a>
+<a href="moveStringShot.html">String Shot</a>
+<a href="moveStunSpore.html">Stun Spore</a>
+<a href="moveSubmission.html">Submission</a>
+<a href="moveSubstitute.html">Substitute</a>
+<a href="moveSuckerPunch.html">Sucker Punch</a>
+<a href="moveSunnyDay.html">Sunny Day</a>
+<a href="moveSuperFang.html">Super Fang</a>
+<a href="moveSuperpower.html">Superpower</a>
+<a href="moveSupersonic.html">Supersonic</a>
+<a href="moveSurf.html">Surf</a>
+<a href="moveSwagger.html">Swagger</a>
+<a href="moveSwallow.html">Swallow</a>
+<a href="moveSweetKiss.html">Sweet Kiss</a>
+<a href="moveSweetScent.html">Sweet Scent</a>
+<a href="moveSwift.html">Swift</a>
+<a href="moveSwordsDance.html">Swords Dance</a>
+<a href="moveSynthesis.html">Synthesis</a>
+<a href="moveTackle.html">Tackle</a>
+<a href="moveTailGlow.html">Tail Glow</a>
+<a href="moveTailWhip.html">Tail Whip</a>
+<a href="moveTailwind.html">Tailwind</a>
+<a href="moveTakeDown.html">Take Down</a>
+<a href="moveTeeterDance.html">Teeter Dance</a>
+<a href="moveTeleport.html">Teleport</a>
+<a href="moveThief.html">Thief</a>
+<a href="moveThrash.html">Thrash</a>
+<a href="moveThunder.html">Thunder</a>
+<a href="moveThunderFang.html">Thunder Fang</a>
+<a href="moveThunderWave.html">Thunder Wave</a>
+<a href="moveThunderbolt.html">Thunderbolt</a>
+<a href="moveThunderPunch.html">ThunderPunch</a>
+<a href="moveThunderShock.html">ThunderShock</a>
+<a href="moveTickle.html">Tickle</a>
+<a href="moveTorment.html">Torment</a>
+<a href="moveToxic.html">Toxic</a>
+<a href="moveToxicSpikes.html">Toxic Spikes</a>
+<a href="moveTransform.html">Transform</a>
+<a href="moveTriAttack.html">Tri Attack</a>
+<a href="moveTrickRoom.html">Trick Room</a>
+<a href="moveTripleAxel.html">Triple Axel</a>
+<a href="moveTripleKick.html">Triple Kick</a>
+<a href="moveTrumpCard.html">Trump Card</a>
+<a href="moveTwineedle.html">Twineedle</a>
+<a href="moveTwister.html">Twister</a>
+<a href="moveU-turn.html">U-turn</a>
+<a href="moveUproar.html">Uproar</a>
+<a href="moveVacuumWave.html">Vacuum Wave</a>
+<a href="moveViceGrip.html">ViceGrip</a>
+<a href="moveVineWhip.html">Vine Whip</a>
+<a href="moveVitalThrow.html">Vital Throw</a>
+<a href="moveVoltTackle.html">Volt Tackle</a>
+<a href="moveWakeUpSlap.html">Wake-Up Slap</a>
+<a href="moveWaterBall.html">Water Ball</a>
+<a href="moveWaterGun.html">Water Gun</a>
+<a href="moveWaterPulse.html">Water Pulse</a>
+<a href="moveWaterSpout.html">Water Spout</a>
+<a href="moveWaterfall.html">Waterfall</a>
+<a href="moveWeatherBall.html">Weather Ball</a>
+<a href="moveWhirlpool.html">Whirlpool</a>
+<a href="moveWhirlwind.html">Whirlwind</a>
+<a href="moveWildCharge.html">Wild Charge</a>
+<a href="moveWillOWisp.html">Will-O-Wisp</a>
+<a href="moveWingAttack.html">Wing Attack</a>
+<a href="moveWish.html">Wish</a>
+<a href="moveWithdraw.html">Withdraw</a>
+<a href="moveWoodHammer.html">Wood Hammer</a>
+<a href="moveWorrySeed.html">Worry Seed</a>
+<a href="moveWrap.html">Wrap</a>
+<a href="moveWringOut.html">Wring Out</a>
+<a href="moveXScissor.html">X-Scissor</a>
+<a href="moveYawn.html">Yawn</a>
+<a href="moveZapCannon.html">Zap Cannon</a>
+<a href="moveZenHeadbutt.html">Zen Headbutt</a>
+  </div>
+</div>
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+</th>
+<th>
+<h1>Platinum Kaizo AI Move Scoring</h1>
+	<p><a href="index.html">Home Page</a></p>
+</th>
+</tr>
+
+<tr>
+<td>
+</td>
+<td>
+<h1>Water Pulse</h1>
+</td>
+</tr>
+
+<tr>
+<td>
+</td>
+<td style="background-color:#F6FA0A">
+<h2 style="color:black;">Basic</h2>
+<p style="color:black;">If the effectiveness of the move is 0x:<br>
+Score -10 and terminate<br><br>
+If the target's ability is Water Absorb or Dry Skin, and the user's ability is not Mold Breaker:<br>
+Score -12 and terminate<br><br>
+If the target's ability is Wonder Guard, and the effectiveness of the move is not 2x or 4x, and the user's ability is not Mold Breaker:<br>
+Score -12 and terminate<br><br></p>
+
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#F7D10F;">
+<h2 style="color:black;">Eval Att</h2>
+<p style="color:black;">If the move can KO the target:<br>
+Score +4 and terminate<br><br>
+
+If the move cannot KO the target, and a different move the user knows would do more damage to the target:<br>
+Score -1 and terminate<br><br>
+
+If the effectiveness of the move is 4x:<br>
+68.8% (176/256) chance of score +2 and terminate<br><br></p>
+
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#F79A0F;">
+<h2 style="color:black;">Expert</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#0FF7E4;">
+<h2 style="color:black;">Doubles vs Opponent</h2>
+<p style="color:black;">If the move cannot KO the target, and the user's ally's HP is over 0% (after rounding):<br>
+If the effectiveness of the move is 1/2x:<br>
+75% (192/256) chance of score -1 and continue<br><br>
+If the effectiveness of the move is 1/4x:<br>
+75% (192/256) chance of score -2 and continue<br><br>
+If the move deals the most damage to the target when considering all of the user's ally's moves as well (regardless of if the ally is alive):<br>
+50% (128/256) chance of score +1 and continue<br><br>
+If the move did not receive a score +1 in the previous check:<br>
+If the effectiveness of the move is 2x:<br>
+60.9% (156/256) chance of score +1 and continue<br><br>
+If the effectiveness of the move is 4x:<br>
+75% (192/256) chance of score +1 and continue<br><br>
+If the target's ally's ability is certainly Storm Drain:<br>
+Score -1 and continue<br><br>
+If the user's ally's ability is Storm Drain:<br>
+Score -10 and terminate</p>
+	
+
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#0792DB">	
+<h2 style="color:black;">Doubles vs Ally</h2>
+<p style="color:black;">If the target's ability is Water Absorb or Dry Skin:<br>
+If the target is at full HP:<br>
+Score -10 and terminate<br><br>
+If the target's HP is over 90%:<br>
+No scoring change and terminate<br><br>
+If the target's HP is over 75%:<br>
+25% (64/256) chance of score +3 and terminate<br><br>
+If the target's HP is over 50%:<br>
+50% (128/256) chance of score +3 and terminate<br><br>
+Otherwise:<br>
+75% (192/256) chance of score +3 and terminate<br><br>
+Otherwise:<br>
+Score -30 and terminate</p>
+	
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#FA197B">		
+<h2 style="color:black;">Setup First Turn</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#ED1602">		
+<h2 style="color:black;">Risky</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#FA7619">		
+<h2 style="color:black;">Prio Damage</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#FA19C5">		
+<h2 style="color:black;">Baton Pass</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#6CFA19">		
+<h2 style="color:black;">Check HP</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#1937FA">		
+<h2 style="color:black;">Weather</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+</td></tr>
+<tr>
+<td>
+</td>
+<td style="background-color:#0B9E1E">		
+<h2 style="color:black;">Harassment</h2>
+<p style="color:black;">(No applicable AI procedures)</p>
+	
+</td>
+</tr>
+
+
+
+</table>
+</body>	
+</html>
