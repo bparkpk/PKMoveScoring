@@ -563,19 +563,28 @@ window.onclick = function(event) {
 <td>
 <h1>AI Move Scoring Guide</h1>
 <p>This site, and information within is adapted from the <a
-	href="https://pokemow.com/Gen4/TrainerAI/">Generation 4 site</a> and the <a href="https://will-jj.github.io/gen4to3MowAI/">Generation 3 site</a>
-			for Platinum Kaizo play.
-			During the initial deployment some information in this briefing, and the subsequent move choice scoring may
-			reflect that - please report any issues to BPark16 on Discord</p>
-		<h2>Overview</h2>
+	href="https://pokemow.com/Gen4/TrainerAI/">Generation 4 site</a> created by PokeMow and the
+	<a href="https://will-jj.github.io/gen4to3MowAI/">Generation 3 site</a> created by Thrillis (aka: Will)
+			for Platinum Kaizo play.<br><br>
+Please report any issues to BPark16 on Discord</p>
+		<h2>Overview<br> Please Read</h2>
 		<p>This page will look up trainer battle AI procedures for the
 			Generation IV Pokémon romhack – Pokémon Platinum Kaizo.</p>
 
 		<p>The Battle AI uses a scoring system to determine which move to use
 			(and which target to use it on, if applicable). Each move starts with a
-			score of 100 (but this starting point is arbitrary), which is then
+			score of 100 (we generally use a starting score of 0 to make it easier), which is then
 			added or subtracted to by the different parts of the scoring procedure.</p>
+	
+		<p>Each scoring module (or flag) will run their scoring procedure
+			depending upon AI flags of the trainer. Each module runs
+			independently, and their scores stack together. Only Doubles AI will
+			attempt to use moves on the ally.</p>
 
+		<h2>The "terminate" keyword within a
+			module means that the scoring of the module is complete, but other
+			modules may still continue on top of the work that it did.</h2>
+	
 		<p>Every move is scored on every target on the field (even if that
 			doesn't make sense for the move, such as Swords Dance or Earthquake),
 			with scores being independent for each target. After all scoring is
@@ -596,7 +605,7 @@ window.onclick = function(event) {
 			randomness within the scoring functions.</p>
 
 		<h2>Move Scoring</h2>
-		<p>The scoring procedure is split into eleven main modules: Basic, Eval Att, Expert, Doubles, Setup First Turn, Risky, Prio Damage, Baton Pass, 		Check HP, Weather, and Harassment.</p>
+		<p>The scoring procedure is split into eleven main modules: Basic, Eval Att, Expert, Doubles, Setup First Turn, Risky, Prio Damage, Baton Pass, Check HP, Weather, and Harassment.</p>
 
 		<p>As a general rule:</p>
 		<ul>
@@ -617,7 +626,7 @@ window.onclick = function(event) {
 			</li>
 			
 			<li>
-				<p><strong>Doubles AI</strong> discourages using attacks on the
+				<p><strong>Doubles AI (also referred to as Tag)</strong> discourages using attacks on the
 					ally without a good reason, and checks if moves such as weather or Trick
 					Room will help or harm the ally.</p>
 				<p>
@@ -627,7 +636,7 @@ window.onclick = function(event) {
 					attack the ally.</p>
 			</li>
 			<li>
-				<p><strong>Setup First Turn AI</strong> encourages status moves on both the user and opponent in <b>ONLY on the first turn of the entire battle.</b></p>
+				<p><strong>Setup First Turn AI (also referred to as Status)</strong> encourages status moves on both the user and opponent in <b>ONLY on the first turn of the entire battle.</b></p>
 			</li>
 			
 			<li>
@@ -635,7 +644,7 @@ window.onclick = function(event) {
 			</li>
 
 			<li>
-				<p><strong>Prio Damage AI</strong> adds a chance of a scoring bonus to certain moves.</p>
+				<p><strong>Prio Damage AI (also referred to as Prioritize Extremes)</strong> adds a chance of a scoring bonus to moves not calculated for damage.</p>
 			</li>
 
 			<li>
@@ -652,13 +661,6 @@ window.onclick = function(event) {
 			</li>
 		</ul>
 
-		<p>None, one, or several of these modules run their scoring procedure
-			depending upon the context of the battle. Each module runs
-			independently, and their scores stack together. Only Doubles AI will
-			attempt to use moves on the ally.</p>
-		<h2>The "terminate" keyword within a
-			module means that the scoring of the module is complete, but other
-			modules may still continue on top of the work that it did.</h2>
 
 		<h2>AI knowledge</h2>
 		<p>The AI always knows what item you're holding. It cheats to see it.</p>
@@ -809,53 +811,6 @@ window.onclick = function(event) {
 			
 			<p>Multipliers used for the <em>input</em> of damage calculation (such as: Choice items / Light Ball / Thick Club / type-boosting items, Light Screen / Reflect, Torrent / Huge Power / Thick Fat, weather type boosts, etc., etc.) are applied as normal. Embargo negating held item effects is also applied. For more information on this, check <a target="_blank" href="https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_IV">the Bulbapedia article on damage calculation</a>, as well as the corresponding article for any specific ability or item to verify its exact mechanism of affecting the damage formula.</p>
 			
-			<h4>Excluded moves</h4>
-			
-			<p>These moves are not accepted for damage calculation. Any attempt to calculate their damage will result in a damage of 0, <em>except</em> when checking the damage of the move previously used by another Pokémon (as in Copycat or Me First). If calculated in this way, moves with a nonregular base power such as Fling, Present, Flail, or Sheer Cold will be treated as having a base power of 1. Full HP will be assumed for Eruption and Water Spout. Magnitude uniquely will generate a random power level if its damage is calculated in this way.</p>
-			
-			<ul>
-				<li>Guillotine</li>
-				<li>Horn Drill</li>
-				<li>Counter</li>
-				<li>Fissure</li>
-				<li>Bide</li>
-				<li>Super Fang</li>
-				<li>Flail</li>
-				<li>Reversal</li>
-				<li>Present</li>
-				<li>Magnitude</li>
-				<li>Mirror Coat</li>
-				<li>Endeavor</li>
-				<li>Sheer Cold</li>
-				<li>Metal Burst</li>
-				<li>Fling</li>
-				<li>Trump Card</li>
-				<li>Wring Out</li>
-				<li>Punishment</li>
-				<li>Crush Grip</li>
-				<li>Selfdestruct</li>
-				<li>Explosion</li>
-				<li>Dream Eater</li>
-				<li>Razor Wind</li>
-				<li>Sky Attack</li>
-				<li>Hyper Beam</li>
-				<li>Hydro Cannon</li>
-				<li>Blast Burn</li>
-				<li>Frenzy Plant</li>
-				<li>Giga Impact</li>
-				<li>Rock Wrecker</li>
-				<li>Roar of Time</li>
-				<li>Skull Bash</li>
-				<li>SolarBeam</li>
-				<li>Spit Up</li>
-				<li>Focus Punch</li>
-				<li>Superpower</li>
-				<li>Eruption</li>
-				<li>Water Spout</li>
-				<li>Sucker Punch</li>
-				<li>Head Smash</li>
-			</ul>
-
 
 
 		<h2>Other notes and quirks</h2>
