@@ -4,10 +4,68 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta charset="UTF-8">
 	<title>Platinum Kaizo AI Move Scoring</title>
-	<script type="text/javascript" src="index.js"></script>
 <meta name="viewport" content="width=600">
-	<link type="text/css" rel="stylesheet" href="index.css">
-</head>
+<style>
+body {background-color: #5E5E5E; color: white;}
+h1 {text-align:center; color: white;}
+h2 {text-align:center; color: white;}
+h3 {text-align:center; color: white;}
+p {text-align:center; color: white;}
+
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+#myInput {
+  box-sizing: border-box;
+  background-image: url('searchicon.png');
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+#myInput:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  height: 480px;
+  overflow: scroll;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style></head>
 
 <body>
 <table>
@@ -485,6 +543,28 @@
 <a href="moveZenHeadbutt.html">Zen Headbutt</a>
   </div>
 </div>
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+function filterFunction() {
+  const input = document.getElementById("myInput");
+  const filter = input.value.toUpperCase();
+  const div = document.getElementById("myDropdown");
+  const a = div.getElementsByTagName("a");
+  for (let i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+</script>
 </th>
 <th>
 <h1>Platinum Kaizo AI Move Scoring</h1>
@@ -590,7 +670,8 @@ Score +1 and terminate</p>
 </td>
 <td style="background-color:#D49DEB">		
 <h2 style="color:black;">Check HP</h2>
-<p style="color:black;">(No applicable AI procedures)</p>
+<p style="color:black;">If the target is the user's ally:<br>
+Check scoring under Doubles vs Ally and terminate</p>
 </td></tr>
 <tr>
 <td>
