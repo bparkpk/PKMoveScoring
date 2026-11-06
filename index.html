@@ -754,7 +754,8 @@
 			
 			<h4>Excluded moves</h4>
 			
-			<p>These moves are not accepted for damage calculation. Any attempt to calculate their damage will result in a damage of 0, <em>except</em> when checking the damage of the move previously used by another Pokémon (as in Copycat or Me First). If calculated in this way, moves with a nonregular base power such as Fling, Present, Flail, or Sheer Cold will be treated as having a base power of 1. Full HP will be assumed for Eruption and Water Spout. Magnitude uniquely will generate a random power level if its damage is calculated in this way.</p>
+			<p>These moves are not accepted for damage calculation. Any attempt to calculate their damage will result in a damage of 0, <em>except</em> when checking the damage of the move previously used by another Pokémon (as in Copycat or Me First). If calculated in this way, moves with a nonregular base power such as Fling, Present, or Flail will be treated as having a base power of 1. Full HP will be assumed for Eruption and Water Spout. Magnitude uniquely will generate a random power level if its damage is calculated in this way.</p>
+			<p><b>Any move that does not check for damage is NOT considered by other moves when checking for highest damage in the Eval Att Flag</b></p>
 			
 			<ul>
 				<li>Guillotine</li>
