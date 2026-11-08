@@ -655,7 +655,20 @@ Score -30 and terminate</p>
 </td>
 <td style="background-color:#5C6AF7">		
 <h2 style="color:black;">Baton Pass</h2>
-<p style="color:black;">(No applicable AI procedures)</p>
+<p style="color:black;">If the user has no other living party members:<br>
+No scoring change and terminate<br><br>
+If the user doesn't know the move Baton Pass:<br>
+30.86% (79/256) chance of no scoring change and terminate<br>
+<b>This is a rare instance where if you do not hit the 30.86%,<br> you continue to the below lines rather than always terminate</b><br><br>
+If it is the first turn of battle:<br>
+92.58% (237/256) chance of score +8 and terminate<br><br>
+If it is not the first turn of battle:<br>
+92.58% (237/256) chance of score +3 and terminate<br>
+<b>This is a rare instance where if you do not hit the 92.58%,<br> you continue to the below lines rather than always terminate</b><br><br>
+If the user's HP is under 60%:<br>
+Score -10 and terminate<br>
+Otherwise:<br>
+Score +1 and terminate</p>
 </td></tr>
 <tr>
 <td>
